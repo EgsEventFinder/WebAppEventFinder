@@ -8,6 +8,7 @@ import Container from './components/layouts/Container'
 import Navbar from './components/layouts/navbar'
 import Footer from './components/layouts/footer'
 import CriarConta from './components/pages/CriarConta'
+import Notifications from './components/pages/Notifications'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/contacts" element={<Contactos />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/createAccount" element={<CriarConta />} />
+            <Route exact path="/notifications" element={<Notifications />} />
         </Routes>
       </Container>
     <Footer/>
