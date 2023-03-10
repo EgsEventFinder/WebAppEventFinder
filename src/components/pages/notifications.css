@@ -50,10 +50,21 @@
 }
 
 .notifications__item__content { width: calc( 95% - 105px ); }
-.notifications__item__title,
+.notifications__item__title{ 
+  display: block;
+  overflow-wrap: break-word;
+}
 .notifications__item__message { 
+    margin-top: 10px;
     display: block;
     overflow-wrap: break-word;
+}
+.notifications__item__data { 
+  margin-top: 25px;
+  margin-left: 90%;
+  font-size: 10px;
+  display: block;
+  overflow-wrap: break-word;
 }
 
 .notifications__item__title {

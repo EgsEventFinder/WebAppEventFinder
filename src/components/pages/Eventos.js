@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Eventos.css';
 import imagem from '../../img/img3.jpg';
+import { Link } from 'react-router-dom';
 
 function Eventos() {
 
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        axios.get('/events/')
+        axios.get('http://127.0.0.1:8000/events/')
           .then(response => setEvents(response.data))
           .catch(error => console.log(error));
     }, []);
@@ -19,8 +20,9 @@ function Eventos() {
                 <h1>Eventos Disponíveis </h1>
             </div>
             <div className = "container_body">
-                {events.map(event => (
+                
                 <div class="container">
+                {events.map(event => (
                     <div class="item-container">
                         <div class="img-container">
                             <img src={imagem} alt=""/>
@@ -29,31 +31,34 @@ function Eventos() {
                             <div class="overlay"></div>
 
                             <div class="event-info">
-                                <p class="title">{event.event_name}</p>
+                                <p class="title">{event.name}</p>
                                 <div class="separator"></div>
-                                <p class="info">{event.event_location}</p>
-                                <p class="price">{event.event_type}</p>
+                                <p class="info">{event.location}</p>
+                                <p class="price">{event.type}</p>
 
                                 <div class="additional-info">
                                     <p class="info">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        Lotação: {event.event_capacity}
+                                        Lotação: {event.capacity}
                                     </p>
                                     <p class="info">
                                         <i class="far fa-calendar-alt"></i>
-                                        Data: {event.event_date}
+                                        Data: {event.date}
                                     </p>
 
                                     <p class="info description">
-                                    {event.event_description}
+                                    {event.description}
                                     </p>
                                 </div>
                             </div>
-                            <button class="action">Book it</button>
+                            
+                            <Link to={`/tickets/${event.event_id}`}><button class="action">Book it</button></Link>
+        
                         </div>
                     </div>
+                ))}
                 </div>
-            ))}
+            
             </div>
         </>
     );

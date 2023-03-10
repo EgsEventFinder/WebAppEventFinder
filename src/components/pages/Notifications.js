@@ -8,7 +8,7 @@ function Notifications() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        axios.get('/send-email')
+        axios.get('http://localhost:3001/notification')
           .then(response => setNotifications(response.data))
           .catch(error => console.log(error));
     }, []);
@@ -30,6 +30,7 @@ function Notifications() {
                     <div class="notifications__item__content">
                         <span class="notifications__item__title">{not.subject}</span>
                         <span class="notifications__item__message">{not.message}</span>
+                        <span class="notifications__item__data">{not.created_at}</span>
                     </div>
 
                     <div>
