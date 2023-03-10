@@ -10,6 +10,7 @@ import Footer from './components/layouts/footer'
 import CriarConta from './components/pages/CriarConta'
 import Notifications from './components/pages/Notifications'
 import Tickets from './components/pages/Tickets'
+import EventManagement from './components/pages/EventManagement'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/createAccount" element={<CriarConta />} />
             <Route exact path="/notifications" element={<Notifications />} />
+            <Route exact path="/eventsManagement" element={<EventManagement />} />
             <Route path="/tickets/:id" element={<Tickets />} />
         </Routes>
       </Container>
