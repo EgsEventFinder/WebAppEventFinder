@@ -21,38 +21,38 @@ function Eventos() {
             </div>
             <div className = "container_body">
                 
-                <div class="container">
+                <div className="container">
                 {events.map(event => (
-                    <div class="item-container">
-                        <div class="img-container">
+                    <div className="item-container" key={event.event_id}>
+                        <div className="img-container">
                             <img src={imagem} alt=""/>
                         </div>
-                        <div class="body-container">
-                            <div class="overlay"></div>
+                        <div className="body-container">
+                            <div className="overlay"></div>
 
-                            <div class="event-info">
-                                <p class="title">{event.name}</p>
-                                <div class="separator"></div>
-                                <p class="info">{event.location}</p>
-                                <p class="price">{event.type}</p>
+                            <div className="event-info">
+                                <p className="title">{event.name}</p>
+                                <div className="separator"></div>
+                                <p className="info">{event.location}</p>
+                                <p className="price">{event.type}</p>
 
-                                <div class="additional-info">
-                                    <p class="info">
-                                        <i class="fas fa-map-marker-alt"></i>
+                                <div className="additional-info">
+                                    <p className="info">
+                                        <i className="fas fa-map-marker-alt"></i>
                                         Lotação: {event.capacity}
                                     </p>
-                                    <p class="info">
-                                        <i class="far fa-calendar-alt"></i>
+                                    <p className="info">
+                                        <i className="far fa-calendar-alt"></i>
                                         Data: {event.date}
                                     </p>
 
-                                    <p class="info description">
+                                    <p className="info description">
                                     {event.description}
                                     </p>
                                 </div>
                             </div>
                             
-                            <Link to={`/tickets/${event.event_id}`}><button class="action">Book it</button></Link>
+                            <Link to={`/tickets/${event.event_id}`}><button className="action">Book it</button></Link>
         
                         </div>
                     </div>

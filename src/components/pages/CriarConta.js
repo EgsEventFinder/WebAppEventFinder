@@ -2,91 +2,159 @@ import { useState } from "react";
 import './login.css'
 
 function CriarConta() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function deleteErrorMessage() {
+    setErrorMessage("");
+  }
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
+  }
+
+  function handleFirstNameChange(event) {
+    setFirstName(event.target.value);
+  }
+
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
+  }
+
+  function handleUsernameChange(event) {
+    setUsername(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      setErrorMessage("As senhas não são iguais.");
+      return;
+    }
+
+    console.log (firstName, lastName, username, email, password);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        email: email,
+        password: password,
+      })
+    };
     
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [passwordfinal, setPasswordfinal] = useState("");
-    const [passworderrada, setPassworderrada] = useState("");
-
-    function verificarPassIgual(e){
-        e.preventDefault()
-        if(password === password2){
-            console.log("certo")
-            setPasswordfinal({password})
-            setPassworderrada("")
+    fetch('/register', requestOptions)
+      .then(response => {
+        if (response.ok) {
+          console.log("Entrou");
+          window.location.href = '/login';
+          return response.json();
+        } else {
+          throw new Error(response.status);
         }
-        else{
-            console.log("errado")
-            setPasswordfinal("")
-            setPassworderrada({password2})
+      })
+      .then(data => {
+        // Handle success case here
+        console.log(data);
+        console.log("Conta Criada com Sucesso");
+      })
+      .catch(error => {
+        if (error instanceof TypeError) {
+          // Handle network errors here
+        } else {
+          setErrorMessage("Conta já existe");
+          console.log(error);
         }
-    }
+      });
+  }
 
-    function sucesso(){
-        return(
-            <div className="conta_certa">
-                <p>Conta registada com sucesso!</p>
-            </div>
-        )    
-    }
-
-    function errado(){
-        return(
-            <div className="conta_certa">
-                <p>Palavras passes têm de ser iguais</p>
-            </div>
-        )    
-    }
-
-    return ( 
+  return (
     <div className="container">
       <div className="container-login">
         <div className="wrap-login">
-          <form className="login-form">
-            <span className="login-form-title"> Bem vindo </span>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <span className="login-form-title">Criar Conta</span>
             <div className="wrap-input">
               <input
-                className={email !== "" ? "has-val input" : "input"}
+                className={firstName ? "has-val input" : "input"}
+                type="text"
+                value={firstName}
+                onChange={handleFirstNameChange}
+              />
+              <span className="focus-input" data-placeholder="First Name"></span>
+            </div>
+
+            <div className="wrap-input">
+              <input
+                className={lastName ? "has-val input" : "input"}
+                type="text"
+                value={lastName}
+                onChange={handleLastNameChange}
+              />
+              <span className="focus-input" data-placeholder="Last Name"></span>
+            </div>
+
+            <div className="wrap-input">
+              <input
+                className={username ? "has-val input" : "input"}
+                type="text"
+                value={username}
+                onChange={handleUsernameChange}
+              />
+              <span className="focus-input" data-placeholder="Username"></span>
+            </div>
+            <div className="wrap-input">
+              <input
+                className={email ? "has-val input" : "input"}
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
               />
               <span className="focus-input" data-placeholder="Email"></span>
             </div>
 
             <div className="wrap-input">
               <input
-                className={password !== "" ? "has-val input" : "input"}
+                className={password ? "has-val input" : "input"}
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
-              <span className="focus-input" data-placeholder="Password"></span>
+              <span className="focus-input" data-placeholder="Senha"></span>
             </div>
 
             <div className="wrap-input">
               <input
-                className={password2 !== "" ? "has-val input" : "input"}
+                className={confirmPassword ? "has-val input" : "input"}
                 type="password"
-                value={password2}
-                onChange={(e) => setPassword2(e.target.value)}
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
               />
-              <span className="focus-input" data-placeholder="Repita a password"></span>
+              <span className="focus-input" data-placeholder="Confirmar senha"></span>
             </div>
 
             <div className="container-login-form-btn">
-              <button type="submit" className="login-form-btn" onClick={verificarPassIgual}>Criar Conta</button>
+              <button onClick={deleteErrorMessage} type="submit" className="login-form-btn">
+                Criar conta
+              </button>
             </div>
-            
-            {passwordfinal && (
-                sucesso()
-            )
-            }
-            {passworderrada && (
-                errado()
-            )
-            }
 
             <div className="text-center">
               <span className="txt1">Já possui conta? </span>
@@ -94,11 +162,15 @@ function CriarConta() {
                 Fazer login
               </a>
             </div>
+
+            {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
           </form>
         </div>
       </div>
     </div>
-    );
+  );
 }
 
 export default CriarConta;
