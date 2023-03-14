@@ -1,0 +1,1 @@
+Install Allow Access Control Origin como extensão do chrome, e por em ON
