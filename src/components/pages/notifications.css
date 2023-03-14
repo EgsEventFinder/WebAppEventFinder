@@ -7,7 +7,7 @@
     padding: 0.5em;
 }
 
-.container_body {
+.container_body_not {
     width: 100%;
     font-size: 16px;
     background: #eee;
@@ -17,6 +17,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.container_body .notifications {
+  display: flex;
+  flex-direction: column;
+}
+
 
 .notifications__item {
   display: flex;

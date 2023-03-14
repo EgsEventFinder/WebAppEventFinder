@@ -21,7 +21,7 @@ function Notifications() {
             <div className = "home_container">
                 <h1>Notifications </h1>
             </div>
-            <div className = "container_body">
+            <div className = "container_body_not">
                 
                 {notifications.map(not => (
                 <div className="notifications__item">
