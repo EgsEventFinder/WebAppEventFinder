@@ -1,4 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
+import { useState } from "react";
+import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import React from "react";
 import Container2 from './Container2'
 import logo from '../../img/costs_logo.png'
@@ -6,6 +8,8 @@ import './navbar.css'
 
 function Navbar({ isAuthenticated, onLogout }) {
     const location = useLocation();
+
+    const [toggleMenu, setToggleMenu] = useState(false);
 
     function handleLogoutClick() {
         onLogout();
@@ -23,14 +27,33 @@ function Navbar({ isAuthenticated, onLogout }) {
                     <>
                       <li className="item"><Link to = "/notifications">Notifications</Link></li>
                       <li className="item"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
+                      <li>
+                        <div className="gpt3__navbar-menu">
+                          {toggleMenu
+                            ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
+                            : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
+                          {toggleMenu && (
+                          <div className="gpt3__navbar-menu_container scale-up-center">
+                            <div className="gpt3__navbar-menu_container-links">
+                              <p>Profile</p>
+                              <p>My Tickets</p>
+                              <p>My Groups</p>
+                            </div>
+                          </div>
+                          )}
+                        </div>
+                        </li>
                     </>
                    
                     ) : (
+                      <>
                         <li className="item">
                           <Link to={{ pathname: "/login", state: { from: location } }}>
                             Login
                           </Link>
                         </li>
+                        
+                      </> 
                     )}
                     
                 </ul>
