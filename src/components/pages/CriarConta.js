@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './login.css'
+import axios from 'axios';
 
 function CriarConta() {
   const [firstName, setFirstName] = useState("");
@@ -9,6 +10,7 @@ function CriarConta() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
 
   function deleteErrorMessage() {
     setErrorMessage("");
@@ -38,42 +40,56 @@ function CriarConta() {
     setUsername(event.target.value);
   }
 
+  function sendDataApiNot(data) {
+      
+    
+
+      const postData = {
+        to: email,
+        subject: "Confirm Registration",
+        message: `Hi ${firstName} ${lastName}, your confirmation link is ${data}`
+      };
+
+      console.log(postData)
+  
+      axios.post('http://localhost:3003/notification', postData)
+        .then((response) => {
+          console.log(response.data);
+          // do something with the response here
+        })
+        .catch((error) => {
+          console.error(error);
+          // handle the error here
+        });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-
+  
     if (password !== confirmPassword) {
       setErrorMessage("As senhas não são iguais.");
       return;
     }
-
-    console.log (firstName, lastName, username, email, password);
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        email: email,
-        password: password,
-      })
+  
+    console.log(firstName, lastName, username, email, password);
+  
+    const postData = {
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      email: email,
+      password: password,
     };
-    
-    fetch('/register', requestOptions)
+  
+    axios.post('http://127.0.0.1:5001/register', postData)
       .then(response => {
-        if (response.ok) {
+        if (response.status === 200) {
           console.log("Entrou");
-          window.location.href = '/login';
-          return response.json();
+          console.log(response.data.link);
+         // sendDataApiNot(response.data.link);
         } else {
           throw new Error(response.status);
         }
-      })
-      .then(data => {
-        // Handle success case here
-        console.log(data);
-        console.log("Conta Criada com Sucesso");
       })
       .catch(error => {
         if (error instanceof TypeError) {
