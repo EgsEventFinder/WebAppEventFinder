@@ -52,7 +52,7 @@ function CriarConta() {
 
       console.log(postData)
   
-      axios.post('http://localhost:3003/notification', postData)
+      axios.post('/notification', postData)
         .then((response) => {
           console.log(response.data);
           // do something with the response here
@@ -86,7 +86,7 @@ function CriarConta() {
         if (response.status === 200) {
           console.log("Entrou");
           console.log(response.data.link);
-         // sendDataApiNot(response.data.link);
+          sendDataApiNot(response.data.link);
         } else {
           throw new Error(response.status);
         }

@@ -1,1 +1,5 @@
 Install Allow Access Control Origin como extensão do chrome, e por em ON
+
+npm install http-proxy-middleware --save
+
+npm install react-scripts
