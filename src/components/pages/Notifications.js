@@ -9,7 +9,7 @@ function Notifications() {
     const email = localStorage.getItem("email");
 
     useEffect(() => {
-        axios.get(`http://localhost:3003/notifications/${email}`)
+        axios.get(`http://localhost:3003/notification/${email}`)
         .then(response => setNotifications(response.data))
         .catch((error) => {
             console.log(error);

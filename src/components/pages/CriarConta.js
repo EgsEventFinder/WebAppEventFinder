@@ -55,6 +55,7 @@ function CriarConta() {
       axios.post('/notification', postData)
         .then((response) => {
           console.log(response.data);
+          window.location.href = 'http://localhost:3000/login';
           // do something with the response here
         })
         .catch((error) => {

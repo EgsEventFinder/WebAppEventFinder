@@ -9,4 +9,13 @@ module.exports = function(app) {
       secure: false,
     })
   );
+
+  app.use(
+    '/notification/:email',
+    createProxyMiddleware({
+      target: 'http://localhost:3003',
+      changeOrigin: true,
+      secure: false,
+    })
+  );
 };

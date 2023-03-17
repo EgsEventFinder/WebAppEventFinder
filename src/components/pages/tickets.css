@@ -129,3 +129,7 @@ div.container {
       margin: 0 20px auto
     }
   }
+
+  .container_body .tickets:hover {
+    background-color: #d3be01;
+  }

@@ -16,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .container_body .notifications {
@@ -29,7 +30,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 105px;
+  height: 120px;
   margin-bottom: 20px;
   padding: 0 20px;
 
@@ -39,6 +40,7 @@
 
   transition: all .3s ease-in;
   cursor: pointer;
+  
 }
 
 .notifications__item__avatar {
@@ -55,8 +57,9 @@
   height: 100%;
 }
 
-.notifications__item__content { width: calc( 95% - 105px ); }
+.notifications__item__content { width: calc( 95% - 105px ); overflow-wrap: break-word; }
 .notifications__item__title{ 
+  margin-top: 20px;
   display: block;
   overflow-wrap: break-word;
 }
@@ -66,8 +69,7 @@
     overflow-wrap: break-word;
 }
 .notifications__item__data { 
-  margin-top: 25px;
-  margin-left: 90%;
+  margin-left: 91%;
   font-size: 10px;
   display: block;
   overflow-wrap: break-word;

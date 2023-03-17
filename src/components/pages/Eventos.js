@@ -23,7 +23,7 @@ function Eventos() {
                 
                 <div className="container">
                 {events.map(event => (
-                    <div className="item-container" key={event.event_id}>
+                    <div className="item-container" key={event.id}>
                         <div className="img-container">
                             <img src={imagem} alt=""/>
                         </div>
@@ -51,8 +51,7 @@ function Eventos() {
                                     </p>
                                 </div>
                             </div>
-                            
-                            <Link to={`/tickets/${event.event_id}`}><button className="action">Book it</button></Link>
+                            <Link to={`/tickets/${event.id}`}><button className="action">Book it</button></Link>
         
                         </div>
                     </div>
