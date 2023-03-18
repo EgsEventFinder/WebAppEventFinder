@@ -24,7 +24,7 @@ function Notifications() {
             <div className = "container_body_not">
                 
                 {notifications.map(not => (
-                <div className="notifications__item">
+                <div className="notifications__item" key={not.id}>
                     <div className="notifications__item__avatar">
                         {/* <img src="https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049__340.png" /> */}
                         <img src={imagem} />

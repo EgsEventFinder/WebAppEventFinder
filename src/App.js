@@ -13,6 +13,7 @@ import Notifications from './components/pages/Notifications'
 import Tickets from './components/pages/Tickets'
 import EventManagement from './components/pages/EventManagement'
 import Protected from "./components/pages/Protected";
+import MyTickets from './components/pages/MyTickets'
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
             <Route exact path="/notifications" element={<Protected isAuthenticated={isAuthenticated}> <Notifications onChange={handleLogin}/> </Protected>} />
             <Route path="/eventsManagement" element={<Protected isAuthenticated={isAuthenticated}> <EventManagement onChange={handleLogin}/> </Protected>} />
             <Route path="/tickets/:id" element={<Protected isAuthenticated={isAuthenticated}> <Tickets onChange={handleLogin}/> </Protected>} />
+            <Route path="/myTickets" element={<Protected isAuthenticated={isAuthenticated}> <MyTickets onChange={handleLogin}/> </Protected>} />
         </Routes>
       </Container>
     <Footer/>

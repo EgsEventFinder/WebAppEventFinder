@@ -18,4 +18,17 @@ module.exports = function(app) {
       secure: false,
     })
   );
+  
+  app.use(
+    '/verifyToken',
+    createProxyMiddleware({
+      target: 'http://127.0.0.1:5001',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /auth/verifyToken called');
+      },
+    })
+  );
+  
 };

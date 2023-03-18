@@ -35,9 +35,9 @@ function Navbar({ isAuthenticated, onLogout }) {
                           {toggleMenu && (
                           <div className="gpt3__navbar-menu_container scale-up-center">
                             <div className="gpt3__navbar-menu_container-links">
-                              <p>Profile</p>
-                              <p>My Tickets</p>
-                              <p>My Groups</p>
+                              <Link to="/myProfile"><p>Profile</p></Link>
+                              <Link to="/myTickets"><p>My Tickets</p></Link>
+                              <Link to="/myGroups"><p>My Groups</p></Link>
                             </div>
                           </div>
                           )}

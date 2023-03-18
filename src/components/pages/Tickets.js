@@ -1,13 +1,24 @@
-import './tickets.css'
+import './tickets.css';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
- 
 
 function Tickets() {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const [event, setEvent] = useState({});
+    const [selectedTicket, setSelectedTicket] = useState(null);
+    const [userData, setUserData] = useState({
+        user_id: null, 
+        event_id: null, 
+        price: null, 
+        ticket_type: null
+    });
+
+    const api = axios.create({
+        baseURL: 'http://127.0.0.1:5001',
+    });
+    
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/events/${id}`)
@@ -18,8 +29,39 @@ function Tickets() {
           .catch(error => console.log(error));
     }, [id]);
 
-    console.log(data)
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken'); // get token from localStorage
+        console.log(token)
+        axios.get('/verifyToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            setUserData(prevState => ({...prevState, user_id: response.data.user_id}));
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
+    const bookTicket = () => {
+        if (!selectedTicket) return;
+        const userData = {
+            user_id: userData.user_id, // Replace with the actual user ID
+            event_id: event.id, // Replace with the ID of the current event
+            price: selectedTicket.price,
+            ticket_type: selectedTicket.type
+        };
+        console.log(userData);
+        axios.post('http://127.0.0.1:5001/ticket', userData)
+          .then(response => {
+            console.log(response.data); // Success message from the API
+          })
+          .catch(error => {
+            console.log(error.response.data); // Error message from the API
+          });
+    };
 
     return ( 
         <>
@@ -28,7 +70,7 @@ function Tickets() {
             </div>
             <div className="container_body">
                 {data.map(ticket => (
-                    <div className="item" key={ticket.type}>
+                    <div className={`item ${selectedTicket === ticket ? 'selected' : ''}`} key={ticket.type} onClick={() => setSelectedTicket(ticket)}>
                         <div className="item-right">
                             <h2 className="num">{ticket.type}</h2>
                             <p className="day">{ticket.price}€</p>
@@ -54,7 +96,7 @@ function Tickets() {
                                 <p>{event.location}<br/><br/> </p>
                             </div>
                             <div className="fix"></div>
-                            <button className="tickets">BUY</button>
+                            <button className="tickets" onClick={bookTicket}>BUY</button>
                         </div> 
                     </div>
                 ))}
