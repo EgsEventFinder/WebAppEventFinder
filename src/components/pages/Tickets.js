@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function Tickets() {
     const { id } = useParams();
+    const [userId, setUserId] = useState({});
     const [data, setData] = useState([]);
     const [event, setEvent] = useState({});
     const [selectedTicket, setSelectedTicket] = useState(null);
@@ -21,7 +22,7 @@ function Tickets() {
     
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/events/${id}`)
+        axios.get(`/events/${id}`)
           .then(response => {
               setData(response.data.tickets);
               setEvent(response.data);
@@ -38,6 +39,8 @@ function Tickets() {
             }
         })
         .then(response => {
+            console.log(response.data.user_id);
+            setUserId(response.data.user_id);
             setUserData(prevState => ({...prevState, user_id: response.data.user_id}));
         })
         .catch(error => {

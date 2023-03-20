@@ -9,7 +9,7 @@ function Eventos() {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/events/')
+        axios.get('/events')
           .then(response => setEvents(response.data))
           .catch(error => console.log(error));
     }, []);

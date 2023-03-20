@@ -82,7 +82,7 @@ function CriarConta() {
       password: password,
     };
   
-    axios.post('http://127.0.0.1:5001/register', postData)
+    axios.post('/register', postData)
       .then(response => {
         if (response.status === 200) {
           console.log("Entrou");
