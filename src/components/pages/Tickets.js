@@ -15,10 +15,6 @@ function Tickets() {
         price: null, 
         ticket_type: null
     });
-
-    const api = axios.create({
-        baseURL: 'http://127.0.0.1:5001',
-    });
     
 
     useEffect(() => {
@@ -50,21 +46,22 @@ function Tickets() {
 
     const bookTicket = () => {
         if (!selectedTicket) return;
-        const userData = {
-            user_id: userData.user_id, // Replace with the actual user ID
-            event_id: event.id, // Replace with the ID of the current event
+        const newTicketData = {
+            user_id: userData.user_id,
+            event_id: event.id,
             price: selectedTicket.price,
             ticket_type: selectedTicket.type
         };
-        console.log(userData);
-        axios.post('http://127.0.0.1:5001/ticket', userData)
+        console.log(newTicketData);
+        axios.post('/ticket', newTicketData)
           .then(response => {
-            console.log(response.data); // Success message from the API
+            console.log(response.data);
           })
           .catch(error => {
-            console.log(error.response.data); // Error message from the API
+            console.log(error.response.data);
           });
     };
+    
 
     return ( 
         <>

@@ -32,6 +32,18 @@ module.exports = function(app) {
   );
 
   app.use(
+    '/ticket',
+    createProxyMiddleware({
+      target: 'http://127.0.0.1:5000',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /auth/verifyToken called');
+      },
+    })
+  );
+
+  app.use(
     '/events',
     createProxyMiddleware({
       target: 'http://127.0.0.1:8000',
