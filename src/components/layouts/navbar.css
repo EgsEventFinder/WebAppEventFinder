@@ -15,16 +15,16 @@
     align-items: center;
 }
 
-.item{
+.item_navbar{
     margin-right: 1em;
 }
 
-.item a{
+.item_navbar a{
     color: #FFF;
     text-decoration: none;
 }
 
-.item a:hover{
+.item_navbar a:hover{
     color: #ffbb33;
 }
 

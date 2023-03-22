@@ -5,7 +5,6 @@ import axios from 'axios';
 
 function Tickets() {
     const { id } = useParams();
-    const [userId, setUserId] = useState({});
     const [data, setData] = useState([]);
     const [event, setEvent] = useState({});
     const [selectedTicket, setSelectedTicket] = useState(null);
@@ -36,7 +35,6 @@ function Tickets() {
         })
         .then(response => {
             console.log(response.data.user_id);
-            setUserId(response.data.user_id);
             setUserData(prevState => ({...prevState, user_id: response.data.user_id}));
         })
         .catch(error => {
@@ -44,23 +42,27 @@ function Tickets() {
         });
     }, []);
 
-    const bookTicket = () => {
-        if (!selectedTicket) return;
+    const bookTicket = async () => {
+        if (!selectedTicket || !userData.user_id) return;
         const newTicketData = {
-            user_id: userData.user_id,
-            event_id: event.id,
-            price: selectedTicket.price,
-            ticket_type: selectedTicket.type
+          user_id: userData.user_id,
+          event_id: event.id,
+          price: selectedTicket.price,
+          ticket_type: selectedTicket.type
         };
         console.log(newTicketData);
-        axios.post('/ticket', newTicketData)
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error.response.data);
-          });
-    };
+      
+        try {
+          await axios.post('/ticket', newTicketData);
+          bought();
+        } catch (error) {
+          console.log(error.response.data);
+        }
+      };
+
+    function bought(){
+        alert("Ticket Bought successfully");
+    }
     
 
     return ( 

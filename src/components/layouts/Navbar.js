@@ -20,13 +20,13 @@ function Navbar({ isAuthenticated, onLogout }) {
             <Container2>
                 <Link to ="/"><img className="img-logo" src={logo} alt="Event Finder"/></Link>
                 <ul className="list">
-                    <li className="item"><Link to = "/">Home</Link></li>
-                    <li className="item"><Link to = "/events">Eventos</Link></li>
-                    <li className="item"><Link to = "/contacts">Contactos</Link></li>
+                    <li className="item_navbar"><Link to = "/">Home</Link></li>
+                    <li className="item_navbar"><Link to = "/events">Eventos</Link></li>
+                    <li className="item_navbar"><Link to = "/contacts">Contactos</Link></li>
                     {isAuthenticated ? (
                     <>
-                      <li className="item"><Link to = "/notifications">Notifications</Link></li>
-                      <li className="item"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
+                      <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
+                      <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       <li>
                         <div className="gpt3__navbar-menu">
                           {toggleMenu
@@ -47,7 +47,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                    
                     ) : (
                       <>
-                        <li className="item">
+                        <li className="item_navbar">
                           <Link to={{ pathname: "/login", state: { from: location } }}>
                             Login
                           </Link>
