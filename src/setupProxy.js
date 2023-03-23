@@ -32,6 +32,18 @@ module.exports = function(app) {
   );
 
   app.use(
+    '/logout',
+    createProxyMiddleware({
+      target: 'http://127.0.0.1:5001',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /logout called');
+      },
+    })
+  );
+
+  app.use(
     '/ticket',
     createProxyMiddleware({
       target: 'http://127.0.0.1:5000',

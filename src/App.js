@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import React, { useState } from "react";
 import Home from './components/pages/Home'
@@ -28,8 +28,24 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem("accessToken");
-    setIsAuthenticated(false);
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      axios.delete('/logout', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      .then(response => {
+        console.log(response.data.msg); // "User loggout successfully!"
+        localStorage.removeItem("accessToken");
+        setIsAuthenticated(false);
+      })
+      .catch(error => {
+        console.log(error.response.data); // handle error response
+        setIsAuthenticated(false);
+      });
+    } else {
+      setIsAuthenticated(false);
+      console.log("Access token not found in localStorage");
+    }
   }
 
  
@@ -51,7 +67,7 @@ function App() {
             <Route exact path="/createAccount" element={<CriarConta />} />
             <Route exact path="/notifications" element={<Protected isAuthenticated={isAuthenticated}> <Notifications onChange={handleLogin}/> </Protected>} />
             <Route path="/eventsManagement" element={<Protected isAuthenticated={isAuthenticated}> <EventManagement onChange={handleLogin}/> </Protected>} />
-            <Route path="/tickets/:id" element={<Protected isAuthenticated={isAuthenticated}> <Tickets onChange={handleLogin}/> </Protected>} />
+            <Route path="/tickets/:id" element={<Protected isAuthenticated={isAuthenticated}> <Tickets onChange={handleLogin} onLogout={handleLogout}/> </Protected>} />
             <Route path="/myTickets" element={<Protected isAuthenticated={isAuthenticated}> <MyTickets onChange={handleLogin}/> </Protected>} />
         </Routes>
       </Container>

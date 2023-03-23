@@ -55,51 +55,61 @@ function MyTickets() {
         fetchEvents();
       }, [tickets]);
 
-    
+      function deleteTicket(){
+        console.log("do nothing");
+      }
 
 
       return (
         <>
-            <div class="home_container_tickets">
-                <h1>My Tickets</h1>
+            <div className="home_container_tickets">
+            <h1>My Tickets</h1>
             </div>
-            <div class="container_body_tickets">
-                {tickets.map((ticket) => {
+            <div className="container_body_tickets">
+            {tickets.map((ticket) => {
                 const event = events.find((event) => event.id === ticket.event_id);
                 if (!event) {
-                    return null; // Event not found
+                return null; // Event not found
                 }
+                const handleDelete = () => {
+                    if (window.confirm("Are you sure you want to delete this ticket?")) {
+                      deleteTicket();
+                    }
+                };
                 return (
-                    <div class="item" key={`${ticket.event_id}-${ticket.booking_date}`}>
-                    <div class="item-left">
-                        <h2 class="title">{event.name}</h2>
-                        <p class="event">{event.type}</p>
-                        <div class="sce">
-                        <div class="icon">
-                            <i class="fa fa-table"></i>
+                <div className="item" key={`${ticket.event_id}-${ticket.booking_date}`}>
+                    <button className="delete-button" onClick={handleDelete}>X</button>
+                    <div className="item-left">
+                    <h2 className="title">{event.name}</h2>
+                    <p className="event">{event.type}</p>
+                    <div className="sce">
+                        <div className="icon">
+                        <i className="fa fa-table"></i>
                         </div>
                         <p>{event.date}</p>
-                        </div>
-                        <div class="loc">
-                        <div class="icon">
-                            <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div className="loc">
+                        <div className="icon">
+                        <i className="fa fa-map-marker"></i>
                         </div>
                         <p>{event.location}</p>
-                        </div>
-                    </div>
-                    <div class="item-right">
-                        <h2 class="num">{ticket.type}</h2>
-                        <p class="day">{ticket.price}€</p>
-                        <span class="up-border"></span>
-                        <span class="down-border"></span>
-                        <img class="qrcode" src={`https://api.qrserver.com/v1/create-qr-code/?data=${ticket.qr_code_data}&amp;size=200x200`} alt="QR Code" />
                     </div>
                     </div>
-                );
-                })}
-            </div>
+                    <div className="item-right">
+                    <h2 className="num">{ticket.type}</h2>
+                    <p className="day">{ticket.price}€</p>
+                    <span className="up-border"></span>
+                    <span className="down-border"></span>
+                    <img className="qrcode" src={`https://api.qrserver.com/v1/create-qr-code/?data=${ticket.qr_code_data}&amp;size=200x200`} alt="QR Code" />
+                    
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </>
       );
+      
 }
 
 export default MyTickets;

@@ -9,6 +9,22 @@ function Eventos() {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken'); // get token from localStorage
+        console.log(token)
+        axios.get('/verifyToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            console.log("Token Válido");
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    useEffect(() => {
         axios.get('/events')
           .then(response => setEvents(response.data))
           .catch(error => console.log(error));

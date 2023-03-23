@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Tickets() {
+function Tickets(props) {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const [event, setEvent] = useState({});
@@ -43,25 +43,61 @@ function Tickets() {
     }, []);
 
     const bookTicket = async () => {
-        if (!selectedTicket || !userData.user_id) return;
+        if (!selectedTicket || !userData.user_id){
+            return;
+        } 
         const newTicketData = {
-          user_id: userData.user_id,
-          event_id: event.id,
-          price: selectedTicket.price,
-          ticket_type: selectedTicket.type
+            user_id: userData.user_id,
+            event_id: event.id,
+            price: selectedTicket.price,
+            ticket_type: selectedTicket.type
         };
         console.log(newTicketData);
-      
+    
         try {
-          await axios.post('/ticket', newTicketData);
-          bought();
+            const token = localStorage.getItem('accessToken'); // get token from localStorage
+            await axios.get('/verifyToken', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await axios.post('/ticket', newTicketData);
+            sendDataApiNot();
+            bought();
         } catch (error) {
-          console.log(error.response.data);
+            console.log(error.response.data);
+            if (error.response && error.response.status === 401) { // if the token is invalid
+                props.onLogout();
+                alert("Please log in again.");
+                window.location.href = '/login'; // redirect to login page
+            }
         }
-      };
+    };
 
     function bought(){
         alert("Ticket Bought successfully");
+    }
+
+    function sendDataApiNot() {
+      
+        const email = localStorage.getItem('email');
+
+        const postData = {
+          to: email,
+          subject: "Ticket Bought!",
+          message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
+        };
+    
+        axios.post('/notification', postData)
+          .then((response) => {
+            console.log(response.data);
+            window.location.href = 'http://localhost:3000/myTickets';
+            // do something with the response here
+          })
+          .catch((error) => {
+            console.error(error);
+            // handle the error here
+          });
     }
     
 

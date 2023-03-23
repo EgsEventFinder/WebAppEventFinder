@@ -16,6 +16,22 @@ function Notifications() {
         });
     }, [email]);
 
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken'); // get token from localStorage
+        console.log(token)
+        axios.get('/verifyToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            console.log("Token Válido");
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
     return (  
         <>  
             <div className = "home_container">
@@ -27,7 +43,7 @@ function Notifications() {
                 <div className="notifications__item" key={not.id}>
                     <div className="notifications__item__avatar">
                         {/* <img src="https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049__340.png" /> */}
-                        <img src={imagem} />
+                        <img src={imagem} alt=""/>
                     </div>
 
                     <div className="notifications__item__content">
