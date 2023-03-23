@@ -55,8 +55,17 @@ function MyTickets() {
         fetchEvents();
       }, [tickets]);
 
-      function deleteTicket(){
-        console.log("do nothing");
+      function deleteTicket(ticket_id) {
+        const userId = userData.user_id;
+        axios
+          .delete(`/ticket/${ticket_id}`, { data: { user_id: userId } })
+          .then((response) => {
+            console.log(response.data.message); // Display success message in console
+            window.location.href = 'http://localhost:3000/myTickets';
+          })
+          .catch((error) => {
+            console.log(error.response.data.message); // Display error message in console
+          });
       }
 
 
@@ -72,9 +81,9 @@ function MyTickets() {
                 return null; // Event not found
                 }
                 const handleDelete = () => {
-                    if (window.confirm("Are you sure you want to delete this ticket?")) {
-                      deleteTicket();
-                    }
+                  if (window.confirm("Are you sure you want to delete this ticket?")) {
+                    deleteTicket(ticket.ticket_id);
+                  }
                 };
                 return (
                 <div className="item" key={`${ticket.event_id}-${ticket.booking_date}`}>
