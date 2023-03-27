@@ -1,0 +1,103 @@
+.contact-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .contact-page__header img {
+    width: 100%;
+    max-width: 800px;
+    max-height: 350px;
+  }
+  
+  .contact-page__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2rem;
+  }
+  
+  .contact-page__social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-page__social-icons a {
+    display: inline-block;
+    margin: 0 0.5rem;
+    color: #333;
+    font-size: 1.5rem;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .contact-page__social-icons a:hover {
+    color: #007bff;
+  }
+  
+  .contact-page__content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-page__content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .contact-page__content form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .contact-page__content .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-page__content label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-page__content input,
+  .contact-page__content textarea {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .contact-page__content input:focus,
+  .contact-page__content textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .contact-page__content textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .contact-page__content button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 1rem;
+  }
+  
+  .contact-page__content button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  

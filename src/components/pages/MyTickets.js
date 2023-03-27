@@ -77,7 +77,7 @@ function MyTickets() {
         const sellerEmail = localStorage.getItem('email');
         const sellerId = userData.user_id; // replace with the actual seller ID
         const buyerId = 2; // replace with the actual buyer ID
-        const buyerEmail = 'tiagovilar08@gmail.com'; // replace with the actual buyer email
+        const buyerEmail = email; // replace with the actual buyer email
         console.log(ticketId, sellerId, email, buyerId, buyerEmail);
       
         axios.get(`/ticket/${ticketId}/trade`, {

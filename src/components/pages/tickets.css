@@ -37,7 +37,8 @@ div.container {
     padding: 0 20px;
     background: #fff;
     overflow: hidden;
-    margin: 10px
+    margin: 10px;
+    cursor: pointer;
   }
   .container .item-right, .container .item-left {
     float: left;

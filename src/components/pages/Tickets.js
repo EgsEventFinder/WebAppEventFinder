@@ -50,32 +50,36 @@ function Tickets(props) {
         if (!selectedTicket || !userData.user_id){
             return;
         } 
-        const newTicketData = {
-            user_id: userData.user_id,
-            event_id: event.id,
-            price: selectedTicket.price,
-            ticket_type: selectedTicket.type
-        };
-        console.log(newTicketData);
-    
-        try {
-            const token = localStorage.getItem('accessToken'); // get token from localStorage
-            await axios.get('/verifyToken', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+        const confirmBuy = window.confirm("Are you sure you want to buy this ticket?");
+        if (confirmBuy){
+            const newTicketData = {
+                user_id: userData.user_id,
+                event_id: event.id,
+                price: selectedTicket.price,
+                ticket_type: selectedTicket.type
+            };
+            console.log(newTicketData);
+        
+            try {
+                const token = localStorage.getItem('accessToken'); // get token from localStorage
+                await axios.get('/verifyToken', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                await axios.post('/ticket', newTicketData);
+                sendDataApiNot();
+                bought();
+            } catch (error) {
+                console.log(error.response.data);
+                if (error.response && error.response.status === 401) { // if the token is invalid
+                    props.onLogout();
+                    alert("Please log in again.");
+                    window.location.href = '/login'; // redirect to login page
                 }
-            })
-            await axios.post('/ticket', newTicketData);
-            sendDataApiNot();
-            bought();
-        } catch (error) {
-            console.log(error.response.data);
-            if (error.response && error.response.status === 401) { // if the token is invalid
-                props.onLogout();
-                alert("Please log in again.");
-                window.location.href = '/login'; // redirect to login page
             }
         }
+        
     };
 
     function bought(){

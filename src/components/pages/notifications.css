@@ -39,7 +39,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   transition: all .3s ease-in;
-  cursor: pointer;
+  
   
 }
 
@@ -168,3 +168,27 @@
     font-family: Verdana,Geneva,Tahoma,sans-serif;
 }
 
+.notifications__item__close {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.notifications__item__close button {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.notifications__item {
+  position: relative;
+}
+
+.notifications__item__option {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

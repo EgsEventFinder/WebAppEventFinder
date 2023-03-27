@@ -34,6 +34,22 @@ function Notifications() {
         });
     }, []);
 
+    function handleDeleteNotification(not_id){
+        const confirmDelete = window.confirm("Are you sure you want to delete this notification?");
+    
+        if (confirmDelete) {
+            axios.delete(`/notification/remove/id/${not_id}`)
+                .then(response => {
+                    // handle success
+                    console.log(response)
+                    window.location.href = 'http://localhost:3000/notifications';
+                })
+                .catch(error => {
+                    // handle error
+                });
+        }
+    }
+
     return (  
         <>  
             <div className = "home_container">
@@ -55,10 +71,7 @@ function Notifications() {
                     </div>
 
                     <div>
-                        <div className="notifications__item__option archive js-option">
-                        <i className="fas fa-folder"></i>
-                        </div>
-                        <div className="notifications__item__option delete js-option">
+                        <div className="notifications__item__option delete js-option" onClick={() => handleDeleteNotification(not.id)}>
                         <i className="fas fa-trash"></i>
                         </div>
                     </div>
