@@ -29,6 +29,8 @@ function Notifications() {
         })
         .catch(error => {
             console.log(error);
+            localStorage.removeItem("accessToken");
+            window.location.href = 'http://localhost:3000';
         });
     }, []);
 

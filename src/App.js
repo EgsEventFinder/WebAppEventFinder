@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from './components/pages/Home'
 import Eventos from './components/pages/Eventos'
 import Contactos from './components/pages/Contactos'
@@ -22,6 +22,11 @@ function App() {
     const accessToken = localStorage.getItem("accessToken");
     return Boolean(accessToken);
   });
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    setIsAuthenticated(Boolean(accessToken));
+  }, []);
 
   function handleLogin(isAuthenticated) {
     setIsAuthenticated(isAuthenticated);

@@ -14,16 +14,6 @@ function Tickets(props) {
         price: null, 
         ticket_type: null
     });
-    
-
-    useEffect(() => {
-        axios.get(`/events/${id}`)
-          .then(response => {
-              setData(response.data.tickets);
-              setEvent(response.data);
-          })
-          .catch(error => console.log(error));
-    }, [id]);
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
@@ -39,8 +29,22 @@ function Tickets(props) {
         })
         .catch(error => {
             console.log(error);
+            localStorage.removeItem("accessToken");
+            window.location.href = 'http://localhost:3000';
         });
     }, []);
+    
+
+    useEffect(() => {
+        axios.get(`/events/${id}`)
+          .then(response => {
+              setData(response.data.tickets);
+              setEvent(response.data);
+          })
+          .catch(error => console.log(error));
+    }, [id]);
+
+    
 
     const bookTicket = async () => {
         if (!selectedTicket || !userData.user_id){
