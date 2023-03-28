@@ -8,6 +8,11 @@ function Home(props) {
 
     const myData = localStorage.getItem('accessToken');
     const email = localStorage.getItem('email');
+
+    if(!props.isAuthenticated){
+        localStorage.removeItem('accessToken');
+    }
+
     if (myData) {
         // Data exists in local storage
         console.log('Data retrieved from local storage: ', myData, email);
