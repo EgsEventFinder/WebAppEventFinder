@@ -76,7 +76,8 @@ function MyTickets() {
       const handleTicketTrade = (ticketId, email) => {
         const sellerEmail = localStorage.getItem('email');
         const sellerId = userData.user_id; // replace with the actual seller ID
-        const buyerId = 2; // replace with the actual buyer ID
+        const buyerId = 3; // replace with the actual buyer ID
+        //const buyerId = getBuyerId(email);
         const buyerEmail = email; // replace with the actual buyer email
         console.log(ticketId, sellerId, email, buyerId, buyerEmail);
       
@@ -122,7 +123,7 @@ function MyTickets() {
         setEmail('');
       };
 
-      //function gettingBuyerId(){
+      //function gettBuyerId(email){
         //chamar api do joao, para dado mail da pessoa, obter id
       //}
 
