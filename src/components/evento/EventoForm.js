@@ -66,11 +66,13 @@ function EventoForm() {
             console.log("Event created:", response.data.Event);
             //Create the group
             createGroup(response.data.Event);
+            alert("Evento Criado Com Sucesso !");
             window.location.href = 'http://localhost:3000/eventsManagement';
           })
           .catch((error) => {
             console.error("Error creating event:", error);
             // Do something with the error, such as show an error message
+            alert("Erro ao Criar o Evento !");
           });
       }
 
@@ -116,11 +118,13 @@ function EventoForm() {
         .then(response => {
         console.log(response.data);
         // handle response data here
+        alert("Evento Eliminado Com Sucesso !");
         window.location.href = 'http://localhost:3000/eventsManagement';
         })
         .catch(error => {
         console.error(error);
         // handle error here
+        alert("Erro ao Eliminar o Evento !");
         });
       };
 
@@ -143,11 +147,13 @@ function EventoForm() {
         .then(response => {
             console.log(response.data);
             // handle response data here
+            alert("Evento Atualizado Com Sucesso !");
             window.location.href = 'http://localhost:3000/eventsManagement';
         })
         .catch(error => {
             console.error(error);
             // handle error here
+            alert("Erro ao Atualizar o Evento !");
             });
     };
 

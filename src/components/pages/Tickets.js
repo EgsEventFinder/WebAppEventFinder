@@ -104,7 +104,7 @@ function Tickets(props) {
                         .then(response => {
                         console.log(response.data);
                         // handle response data here
-                        alert("Member added to group");
+                        // alert("Member added to group");
                         })
                         .catch(error => {
                         console.error(error);
@@ -122,35 +122,29 @@ function Tickets(props) {
             // handle error here
             });
         
-        
-
-
-        
-        
-        
         alert("Ticket Bought successfully");
     }
 
     function sendDataApiNot() {
       
-        // const email = localStorage.getItem('email');
+        const email = localStorage.getItem('email');
 
-        // const postData = {
-        //   to: email,
-        //   subject: "Ticket Bought!",
-        //   message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
-        // };
+        const postData = {
+          to: email,
+          subject: "Ticket Bought!",
+          message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
+        };
     
-        // axios.post('/notification', postData)
-        //   .then((response) => {
-        //     console.log(response.data);
-        //     window.location.href = 'http://localhost:3000/myTickets';
-        //     // do something with the response here
-        //   })
-        //   .catch((error) => {
-        //     console.error(error);
-        //     // handle the error here
-        //   });
+        axios.post('/notification', postData)
+          .then((response) => {
+            console.log(response.data);
+            window.location.href = 'http://localhost:3000/myTickets';
+            // do something with the response here
+          })
+          .catch((error) => {
+            console.error(error);
+            // handle the error here
+          });
     }
     
 

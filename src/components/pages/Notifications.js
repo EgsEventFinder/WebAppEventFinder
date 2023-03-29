@@ -42,6 +42,7 @@ function Notifications() {
                 .then(response => {
                     // handle success
                     console.log(response)
+                    alert("Notificação Eliminada com Sucesso!");
                     window.location.href = 'http://localhost:3000/notifications';
                 })
                 .catch(error => {
