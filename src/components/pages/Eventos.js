@@ -21,6 +21,7 @@ function Eventos() {
         })
         .catch(error => {
             console.log(error);
+            console.log("erro");
         });
     }, []);
 

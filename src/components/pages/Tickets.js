@@ -14,6 +14,7 @@ function Tickets(props) {
         price: null, 
         ticket_type: null
     });
+    
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
@@ -69,7 +70,7 @@ function Tickets(props) {
                 })
                 await axios.post('/ticket', newTicketData);
                 sendDataApiNot();
-                bought();
+                bought(event.id);
             } catch (error) {
                 console.log(error.response.data);
                 if (error.response && error.response.status === 401) { // if the token is invalid
@@ -82,30 +83,74 @@ function Tickets(props) {
         
     };
 
-    function bought(){
+    function bought(event_id){
+        //Buscar nome do evento
+        axios
+            .get(`/events/${event_id}`)
+            .then(response => {
+            console.log(response.data);
+            // handle response data here
+            //Buscar id do grupo associado ao nome do evento
+            axios.get(`/group/${response.data.name}`)
+                .then(response => {
+                    console.log(response.data);
+                    // handle group response here
+                    //adicionar utilizador ao grupo
+                    const groupId = response.data.id;
+                    const email = localStorage.getItem('email'); 
+                    const members = [email]; // replace with your member list
+                    axios
+                        .put(`/group/${groupId}`, { members })
+                        .then(response => {
+                        console.log(response.data);
+                        // handle response data here
+                        alert("Member added to group");
+                        })
+                        .catch(error => {
+                        console.error(error);
+                        // handle error here
+                        });
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    // handle error here
+                });
+            })
+            .catch(error => {
+            console.error(error);
+            // handle error here
+            });
+        
+        
+
+
+        
+        
+        
         alert("Ticket Bought successfully");
     }
 
     function sendDataApiNot() {
       
-        const email = localStorage.getItem('email');
+        // const email = localStorage.getItem('email');
 
-        const postData = {
-          to: email,
-          subject: "Ticket Bought!",
-          message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
-        };
+        // const postData = {
+        //   to: email,
+        //   subject: "Ticket Bought!",
+        //   message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
+        // };
     
-        axios.post('/notification', postData)
-          .then((response) => {
-            console.log(response.data);
-            window.location.href = 'http://localhost:3000/myTickets';
-            // do something with the response here
-          })
-          .catch((error) => {
-            console.error(error);
-            // handle the error here
-          });
+        // axios.post('/notification', postData)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     window.location.href = 'http://localhost:3000/myTickets';
+        //     // do something with the response here
+        //   })
+        //   .catch((error) => {
+        //     console.error(error);
+        //     // handle the error here
+        //   });
     }
     
 

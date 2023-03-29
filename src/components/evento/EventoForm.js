@@ -1,73 +1,170 @@
 import './eventoForm.css'
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
 function EventoForm() {
 
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken'); // get token from localStorage
+        console.log(token);
+        axios.get('/verifyToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            console.log(response.data.user_id);
+        })
+        .catch(error => {
+            console.log(error);
+            localStorage.removeItem("accessToken");
+            window.location.href = 'http://localhost:3000';
+        });
+    }, []);
+
     //constantes para adicionar evento ou atualizar
     const [name, setName] = useState('');
-    const [localization, setLocalization] = useState('');
+    const [location, setlocation] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [capacity, setCapacity] = useState('');
+    const [tickets, setTickets] = useState([]);
+
+    //constantes para atualizar evento 
+    const [name2, setName2] = useState('');
+    const [location2, setlocation2] = useState('');
+    const [category2, setCategory2] = useState('');
+    const [description2, setDescription2] = useState('');
+    const [date2, setDate2] = useState('');
+    const [capacity2, setCapacity2] = useState('');
+    const [tickets2, setTickets2] = useState([]);
 
     //constante para remover evento
     const [eventId, setEventId] = useState('');
 
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // TODO: submit form data to server or perform some other action
+    function handleSubmit(event) {
+        event.preventDefault(); // prevent default form submission
+      
+        // Create an object with the form data
+        const formData = {
+          name,
+          location,
+          type: category, // Use "category" value as "type" in the API endpoint
+          description,
+          date,
+          capacity,
+          tickets,
+        };
+      
+        // Send a POST request to the API endpoint with the form data
+        axios
+          .post("/events", formData)
+          .then((response) => {
+            // Do something with the response, such as show a success message
+            console.log("Event created:", response.data.Event);
+            //Create the group
+            createGroup(response.data.Event);
+            window.location.href = 'http://localhost:3000/eventsManagement';
+          })
+          .catch((error) => {
+            console.error("Error creating event:", error);
+            // Do something with the error, such as show an error message
+          });
+      }
 
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('localization', localization);
-        formData.append('category', category);
-        formData.append('description', description);
-        formData.append('date', date);
-        formData.append('capacity', capacity);
-
-        // make POST request to API endpoint
-        axios.post('http://127.0.0.1:8000/', formData)
-        .then(response => {
-            console.log(response.data);
-            // TODO: handle successful response from API
-        })
-        .catch(error => {
-            console.error(error);
-            // TODO: handle error from API
-        });
+    const handleAddTicket = () => {
+        setTickets([...tickets, { type: "", price: "" }]);
+      };
+      
+    const handleTicketChange = (index, event) => {
+    const updatedTickets = [...tickets];
+    updatedTickets[index][event.target.name] = event.target.value;
+    setTickets(updatedTickets);
     };
+    
+    const handleTicketRemove = (index) => {
+    const updatedTickets = [...tickets];
+    updatedTickets.splice(index, 1);
+    setTickets(updatedTickets);
+    };
+
+    //for update
+    const handleAddTicket2 = () => {
+        setTickets2([...tickets2, { type: "", price: "" }]);
+      };
+      
+    const handleTicketChange2 = (index, event) => {
+    const updatedTickets2 = [...tickets2];
+    updatedTickets2[index][event.target.name] = event.target.value;
+    setTickets2(updatedTickets2);
+    };
+    
+    const handleTicketRemove2 = (index) => {
+    const updatedTickets2 = [...tickets2];
+    updatedTickets2.splice(index, 1);
+    setTickets2(updatedTickets2);
+    };
+      
 
     const handleDelete = (event) => {
         event.preventDefault();
         console.log(eventId);
         // TODO: send the event ID to the server to delete the event using axios
+        axios.delete(`/events/${eventId}`)
+        .then(response => {
+        console.log(response.data);
+        // handle response data here
+        window.location.href = 'http://localhost:3000/eventsManagement';
+        })
+        .catch(error => {
+        console.error(error);
+        // handle error here
+        });
       };
 
     const handleUpdate = (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('localization', localization);
-        formData.append('category', category);
-        formData.append('description', description);
-        formData.append('date', date);
-        formData.append('capacity', capacity);
-        const eventIdToUpdate = eventId;
-
-        // make PUT request to API endpoint
-        axios.put(`http://127.0.0.1:8000/${eventIdToUpdate}`, formData)
+        event.preventDefault(); // prevent default form submission
+      
+        // Create an object with the form data
+        const formData = {
+          name: name2,
+          location: location2,
+          type: category2, // Use "category" value as "type" in the API endpoint
+          description: description2,
+          date: date2,
+          capacity: capacity2,
+          tickets: tickets2,
+        };
+      
+        // Send a POST request to the API endpoint with the form data
+        axios.put(`/events/${eventId}`, formData)
         .then(response => {
             console.log(response.data);
-            // TODO: handle successful response from API
+            // handle response data here
+            window.location.href = 'http://localhost:3000/eventsManagement';
         })
         .catch(error => {
             console.error(error);
-            // TODO: handle error from API
-        });
+            // handle error here
+            });
     };
+
+    function createGroup(data){
+        //console.log(data.name);
+        const { name } = data;
+
+        axios.post('/group', { name })
+            .then(response => {
+            console.log(response.data);
+            // handle response data here
+            })
+            .catch(error => {
+            console.error(error);
+            // handle error here
+            });
+    }
 
 
     return (  
@@ -86,12 +183,12 @@ function EventoForm() {
                 />
                 </div>
                 <div>
-                <label htmlFor="localization">Localization:</label>
+                <label htmlFor="location">location:</label>
                 <input
                     type="text"
-                    id="localization"
-                    value={localization}
-                    onChange={(e) => setLocalization(e.target.value)}
+                    id="location"
+                    value={location}
+                    onChange={(e) => setlocation(e.target.value)}
                 />
                 </div>
                 <div>
@@ -133,6 +230,17 @@ function EventoForm() {
                     onChange={(e) => setCapacity(e.target.value)}
                 />
                 </div>
+                <div>
+                <label htmlFor="tickets">Tickets:</label>
+                <button type="button" onClick={handleAddTicket}>Add Ticket</button>
+                {tickets.map((ticket, index) => (
+                    <div key={index}>
+                    <input type="text" name="type" placeholder="Type" value={ticket.type} onChange={(e) => handleTicketChange(index, e)} />
+                    <input type="number" name="price" placeholder="Price" value={ticket.price} onChange={(e) => handleTicketChange(index, e)} />
+                    <button type="button" onClick={() => handleTicketRemove(index)}>Remove</button>
+                    </div>
+                ))}
+                </div>
                 <button className="btn" type="submit">Submit</button>
             </form>
             </div>
@@ -149,29 +257,29 @@ function EventoForm() {
                 />
             </div>
             <div>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name2">Name:</label>
                 <input
                 type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                id="name2"
+                value={name2}
+                onChange={(e) => setName2(e.target.value)}
                 />
             </div>
             <div>
-                <label htmlFor="localization">Localization:</label>
+                <label htmlFor="location2">location:</label>
                 <input
                 type="text"
-                id="localization"
-                value={localization}
-                onChange={(e) => setLocalization(e.target.value)}
+                id="location2"
+                value={location2}
+                onChange={(e) => setlocation2(e.target.value)}
                 />
             </div>
             <div>
-                <label htmlFor="category">Category:</label>
+                <label htmlFor="category2">Category:</label>
                 <select
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                id="category2"
+                value={category2}
+                onChange={(e) => setCategory2(e.target.value)}
                 >
                 <option value="">Select a category</option>
                 <option value="concert">Concert</option>
@@ -180,38 +288,49 @@ function EventoForm() {
                 </select>
             </div>
             <div>
-                <label htmlFor="description">Description:</label>
+                <label htmlFor="description2">Description:</label>
                 <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                id="description2"
+                value={description2}
+                onChange={(e) => setDescription2(e.target.value)}
                 />
             </div>
             <div>
-                <label htmlFor="date">Date:</label>
+                <label htmlFor="date2">Date:</label>
                 <input
                 type="date"
-                id="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                id="date2"
+                value={date2}
+                onChange={(e) => setDate2(e.target.value)}
                 />
             </div>
             <div>
-                <label htmlFor="capacity">Capacity:</label>
+                <label htmlFor="capacity2">Capacity:</label>
                 <input
                 type="number"
-                id="capacity"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
+                id="capacity2"
+                value={capacity2}
+                onChange={(e) => setCapacity2(e.target.value)}
                 />
             </div>
+            <div>
+                <label htmlFor="tickets2">Tickets:</label>
+                <button type="button" onClick={handleAddTicket2}>Add Ticket</button>
+                {tickets2.map((ticket2, index2) => (
+                    <div key={index2}>
+                    <input type="text" name="type" placeholder="Type" value={ticket2.type} onChange={(e) => handleTicketChange2(index2, e)} />
+                    <input type="number" name="price" placeholder="Price" value={ticket2.price} onChange={(e) => handleTicketChange2(index2, e)} />
+                    <button type="button" onClick={() => handleTicketRemove2(index2)}>Remove</button>
+                    </div>
+                ))}
+                </div>
             <button className="btn" type="submit">Update</button>
             </form> 
         </div>
         </div>
         <div style={{textAlign: "center", marginTop:"30px"}}>
         <h1>Delete Event</h1>
-        <form onSubmit={handleDelete} style={{marginTop: "20px", marginTop: "30px", marginBottom:"50px"}}>
+        <form onSubmit={handleDelete} style={{marginTop: "30px", marginBottom:"50px"}}>
                 <div>
                 <label htmlFor="eventId">ID of the event to delete:</label>
                 <input

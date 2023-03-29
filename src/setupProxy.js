@@ -18,6 +18,17 @@ module.exports = function(app) {
       secure: false,
     })
   );
+  app.use(
+    '/group',
+    createProxyMiddleware({
+      target: 'http://localhost:3003',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /group');
+      },
+    })
+  );
   
   app.use(
     '/verifyToken',
@@ -63,6 +74,7 @@ module.exports = function(app) {
       secure: false,
     })
   );
+  
 
   
 };
