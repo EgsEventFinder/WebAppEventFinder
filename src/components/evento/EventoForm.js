@@ -4,23 +4,23 @@ import axios from 'axios';
 
 function EventoForm() {
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken'); // get token from localStorage
-        console.log(token);
-        axios.get('/verifyToken', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            console.log(response.data.user_id);
-        })
-        .catch(error => {
-            console.log(error);
-            localStorage.removeItem("accessToken");
-            window.location.href = 'http://localhost:3000';
-        });
-    }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem('accessToken'); // get token from localStorage
+    //     console.log(token);
+    //     axios.get('/verifyToken', {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //     .then(response => {
+    //         console.log(response.data.user_id);
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //         localStorage.removeItem("accessToken");
+    //         window.location.href = 'http://localhost:3000';
+    //     });
+    // }, []);
 
     //constantes para adicionar evento ou atualizar
     const [name, setName] = useState('');
@@ -66,6 +66,7 @@ function EventoForm() {
             console.log("Event created:", response.data.Event);
             //Create the group
             createGroup(response.data.Event);
+            sendNotGroup(name);
             alert("Evento Criado Com Sucesso !");
             window.location.href = 'http://localhost:3000/eventsManagement';
           })
@@ -112,7 +113,19 @@ function EventoForm() {
 
     const handleDelete = (event) => {
         event.preventDefault();
-        console.log(eventId);
+        //Eliminar grupo
+        axios
+            .get(`/events/${eventId}`)
+            .then(response => {
+                console.log(response.data);
+                deleteGroup(response.data.name);
+        })
+        .catch(error => {
+        console.error(error);
+        // handle error here
+        });
+        
+
         // TODO: send the event ID to the server to delete the event using axios
         axios.delete(`/events/${eventId}`)
         .then(response => {
@@ -147,8 +160,9 @@ function EventoForm() {
         .then(response => {
             console.log(response.data);
             // handle response data here
+            sendNotGroupEventUpdate(name2);
             alert("Evento Atualizado Com Sucesso !");
-            window.location.href = 'http://localhost:3000/eventsManagement';
+            //window.location.href = 'http://localhost:3000/eventsManagement';
         })
         .catch(error => {
             console.error(error);
@@ -170,6 +184,87 @@ function EventoForm() {
             console.error(error);
             // handle error here
             });
+    }
+
+    function sendNotGroup(name){
+        axios.get('/users')
+            .then(response => {
+            const users = response.data;
+            const emails = users.map(user => user.email);
+            console.log(emails);
+            // Use the retrieved email addresses as needed
+            // handle response data here
+            axios.post('/notification', {
+                to: emails, // or an array of email addresses
+                subject: 'Novo Evento Disponível!',
+                message: `Está Disponivel um novo evento(${name})no WebSite! Check it out!`
+                })
+                .then(response => {
+                console.log(response.data); // handle successful response
+                console.log("Emails enviadoooooos")    
+            })
+            .catch(error => {
+            console.error(error);
+            // handle error here
+            });
+            })
+            .catch(error => {
+            console.error(error);
+            });
+        
+    }
+
+    function sendNotGroupEventUpdate(event_name){
+        axios.get(`/group/${event_name}`)
+                .then(response => {
+                    console.log(response.data);
+                    // handle group response here
+                    //adicionar utilizador ao grupo
+                    const groupId = response.data.id; 
+                    const data = {
+                        groupId: groupId,
+                        subject: 'Evento Atualizado!',
+                        message: `O evento ${event_name} foi Atualizado! Check it out!`
+                      };
+                      
+                    axios.post('/groupnotification', data)
+                    .then(response => {
+                        console.log('API response:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('API error:', error);
+                    });
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    // handle error here
+                });
+    }
+
+    function deleteGroup(event_name){
+        axios.get(`/group/${event_name}`)
+                .then(response => {
+                    console.log(response.data);
+                    // handle group response here
+                    //adicionar utilizador ao grupo
+                    const groupId = response.data.id; 
+                    axios
+                        .delete(`/group/${groupId}`)
+                        .then(response => {
+                        console.log(response.data);
+                        // handle response data here
+                        })
+                        .catch(error => {
+                        console.error(error);
+                        // handle error here
+                        });
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    // handle error here
+                });
     }
 
 
@@ -272,7 +367,7 @@ function EventoForm() {
                 />
             </div>
             <div>
-                <label htmlFor="location2">location:</label>
+                <label htmlFor="location2">Location:</label>
                 <input
                 type="text"
                 id="location2"

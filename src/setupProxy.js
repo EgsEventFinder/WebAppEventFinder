@@ -29,6 +29,18 @@ module.exports = function(app) {
       },
     })
   );
+
+  app.use(
+    '/groupnotification',
+    createProxyMiddleware({
+      target: 'http://localhost:3003',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /groupnotification');
+      },
+    })
+  );
   
   app.use(
     '/verifyToken',
