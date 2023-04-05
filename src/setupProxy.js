@@ -1,6 +1,9 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require('cors');
 
 module.exports = function(app) {
+  // Add the cors middleware
+  app.use(cors());
   app.use(
     '/notification',
     createProxyMiddleware({
@@ -77,6 +80,28 @@ module.exports = function(app) {
       },
     })
   );
+  app.use(
+    '/success',
+    createProxyMiddleware({
+      target: 'http://127.0.0.1:5000',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /success called');
+      },
+    })
+  );
+  app.use(
+    '/cancel',
+    createProxyMiddleware({
+      target: 'http://127.0.0.1:5000',
+      changeOrigin: true,
+      secure: false,
+      onProxyReq: (proxyReq) => {
+        console.log('proxy middleware for /cancel called');
+      },
+    })
+  );
 
   app.use(
     '/events',
@@ -86,7 +111,16 @@ module.exports = function(app) {
       secure: false,
     })
   );
-  
 
+  
+  
+  app.use(
+    '/c/pay',
+    createProxyMiddleware({
+      target: 'https://checkout.stripe.com',
+      changeOrigin: true,
+      secure: false,
+    })
+  );
   
 };

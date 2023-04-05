@@ -47,17 +47,20 @@ function Tickets(props) {
 
     
 
-    const bookTicket = async () => {
+    const bookTicket = async (event_name) => {
         if (!selectedTicket || !userData.user_id){
             return;
         } 
         const confirmBuy = window.confirm("Are you sure you want to buy this ticket?");
         if (confirmBuy){
+            console.log("Nome do evento:", event_name);
             const newTicketData = {
                 user_id: userData.user_id,
                 event_id: event.id,
                 price: selectedTicket.price,
-                ticket_type: selectedTicket.type
+                ticket_type: selectedTicket.type,
+                event_name: event_name
+                 
             };
             console.log(newTicketData);
         
@@ -67,10 +70,61 @@ function Tickets(props) {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
-                })
-                await axios.post('/ticket', newTicketData);
-                sendDataApiNot();
-                bought(event.id);
+                })  
+
+                let paymentSuccessful = false;
+
+                axios.post('/ticket', newTicketData)
+                    .then(response => {
+                        const url = response.data.url;
+                        window.open(url, '_blank');
+                        
+                        // const checkSuccess = new Promise((resolve, reject) => {
+                        // const intervalId = setInterval(() => {
+                        //     if (!paymentSuccessful) {
+                        //     axios.get('/success')
+                        //         .then(response => {
+                        //         clearInterval(intervalId);
+                        //         paymentSuccessful = true;
+                        //         resolve(response.data);
+                        //         })
+                        //         .catch(error => {
+                        //         console.log(error);
+                        //         reject(error);
+                        //         });
+                        //     }
+                        // }, 1000);
+                        // });
+
+                        // checkSuccess.then(successResponse => {
+                        // // Do something with the successful response
+                        // })
+                        // .catch(error => {
+                        // console.log(error);
+                        // });
+
+                        // checkSuccess.then(() => {
+                        // const intervalId = setInterval(() => {
+                        //     if (!paymentSuccessful) {
+                        //     axios.get('/cancel')
+                        //         .then(response => {
+                        //         clearInterval(intervalId);
+                        //         // Do something with the cancelled response
+                        //         })
+                        //         .catch(error => {
+                        //         console.log(error);
+                        //         });
+                        //     }
+                        // }, 1000);
+                        // });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+                //ativar isto quando tiver a funcionar o pagamento
+                // sendDataApiNot();
+                // bought(event.id);
             } catch (error) {
                 console.log(error.response.data);
                 if (error.response && error.response.status === 401) { // if the token is invalid
@@ -181,7 +235,7 @@ function Tickets(props) {
                                 <p>{event.location}<br/><br/> </p>
                             </div>
                             <div className="fix"></div>
-                            <button className="tickets" onClick={bookTicket}>BUY</button>
+                            <button className="tickets" onClick={() => bookTicket(event.name)}>BUY</button>
                         </div> 
                     </div>
                 ))}
