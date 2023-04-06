@@ -48,94 +48,80 @@ function Tickets(props) {
     
 
     const bookTicket = async (event_name) => {
-        if (!selectedTicket || !userData.user_id){
-            return;
-        } 
+        if (!selectedTicket || !userData.user_id) {
+          return;
+        }
+      
+      
         const confirmBuy = window.confirm("Are you sure you want to buy this ticket?");
         if (confirmBuy){
-            console.log("Nome do evento:", event_name);
-            const newTicketData = {
-                user_id: userData.user_id,
-                event_id: event.id,
-                price: selectedTicket.price,
-                ticket_type: selectedTicket.type,
-                event_name: event_name
-                 
-            };
-            console.log(newTicketData);
-        
-            try {
-                const token = localStorage.getItem('accessToken'); // get token from localStorage
-                await axios.get('/verifyToken', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })  
-
-                let paymentSuccessful = false;
-
-                axios.post('/ticket', newTicketData)
+          console.log("Nome do evento:", event_name);
+          const newTicketData = {
+            user_id: userData.user_id,
+            event_id: event.id,
+            price: selectedTicket.price,
+            ticket_type: selectedTicket.type,
+            event_name: event_name
+          };
+          console.log(newTicketData);
+      
+          try {
+            const token = localStorage.getItem('accessToken'); // get token from localStorage
+            await axios.get('/verifyToken', {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })  
+      
+            axios.post('/ticket', newTicketData)
+              .then(response => {
+                const url = response.data.session_url;
+                const newWindow = window.open(url, '_blank');
+      
+                const checkPaymentStatus = new Promise((resolve, reject) => {
+                  const intervalId = setInterval(() => {
+                    axios.get(`/ticket/success?session_id=${response.data.session_id}`)
                     .then(response => {
-                        const url = response.data.url;
-                        window.open(url, '_blank');
-                        
-                        // const checkSuccess = new Promise((resolve, reject) => {
-                        // const intervalId = setInterval(() => {
-                        //     if (!paymentSuccessful) {
-                        //     axios.get('/success')
-                        //         .then(response => {
-                        //         clearInterval(intervalId);
-                        //         paymentSuccessful = true;
-                        //         resolve(response.data);
-                        //         })
-                        //         .catch(error => {
-                        //         console.log(error);
-                        //         reject(error);
-                        //         });
-                        //     }
-                        // }, 1000);
-                        // });
-
-                        // checkSuccess.then(successResponse => {
-                        // // Do something with the successful response
-                        // })
-                        // .catch(error => {
-                        // console.log(error);
-                        // });
-
-                        // checkSuccess.then(() => {
-                        // const intervalId = setInterval(() => {
-                        //     if (!paymentSuccessful) {
-                        //     axios.get('/cancel')
-                        //         .then(response => {
-                        //         clearInterval(intervalId);
-                        //         // Do something with the cancelled response
-                        //         })
-                        //         .catch(error => {
-                        //         console.log(error);
-                        //         });
-                        //     }
-                        // }, 1000);
-                        // });
+                      console.log(response.data)
+                      // Close the new window
+                      newWindow.close();
+                      clearInterval(intervalId); // Clear the interval
+                      resolve(response.data);
+                      //ativar isto quando tiver a funcionar o pagamento
+                      sendDataApiNot();
+                      bought(event.id);
                     })
                     .catch(error => {
-                        console.log(error);
+                      console.log(error);
+                      reject(error);
+                      //clearInterval(intervalId); // Clear the interval on error
                     });
-
-                //ativar isto quando tiver a funcionar o pagamento
-                // sendDataApiNot();
-                // bought(event.id);
-            } catch (error) {
-                console.log(error.response.data);
-                if (error.response && error.response.status === 401) { // if the token is invalid
-                    props.onLogout();
-                    alert("Please log in again.");
-                    window.location.href = '/login'; // redirect to login page
-                }
+                  }, 3000);
+                });
+      
+                checkPaymentStatus.then(successResponse => {
+                  // Payment was successful
+                  console.log(successResponse);
+                })
+                .catch(error => {
+                  // Payment was not successful
+                  console.log(error);
+                });
+              })
+              .catch(error => {
+                console.log(error);
+              });
+      
+          } catch (error) {
+            console.log(error.response.data);
+            if (error.response && error.response.status === 401) { // if the token is invalid
+              props.onLogout();
+              alert("Please log in again.");
+              window.location.href = '/login'; // redirect to login page
             }
+          }
         }
-        
-    };
+      };
 
     function bought(event_id){
         //Buscar nome do evento

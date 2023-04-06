@@ -21,7 +21,8 @@ function Eventos() {
         })
         .catch(error => {
             console.log(error);
-            console.log("erro");
+            localStorage.removeItem("accessToken");
+            window.location.href = 'http://localhost:3000';
         });
     }, []);
 

@@ -19,7 +19,9 @@ function Contactos() {
             console.log("Token Válido");
         })
         .catch(error => {
-            console.log(error);
+          console.log(error);
+          localStorage.removeItem("accessToken");
+          window.location.href = 'http://localhost:3000';
         });
     }, []);
 
