@@ -77,26 +77,54 @@ function Tickets(props) {
               .then(response => {
                 const url = response.data.session_url;
                 const newWindow = window.open(url, '_blank');
+                const session_id2 = response.data.session_id;
       
                 const checkPaymentStatus = new Promise((resolve, reject) => {
                   const intervalId = setInterval(() => {
-                    axios.get(`/ticket/success?session_id=${response.data.session_id}`)
-                    .then(response => {
-                      console.log(response.data)
-                      // Close the new window
-                      newWindow.close();
-                      clearInterval(intervalId); // Clear the interval
-                      resolve(response.data);
-                      //ativar isto quando tiver a funcionar o pagamento
-                      sendDataApiNot();
-                      bought(event.id);
-                    })
-                    .catch(error => {
-                      console.log(error);
-                      reject(error);
-                      //clearInterval(intervalId); // Clear the interval on error
-                    });
-                  }, 3000);
+                    axios.get(`/ticket/success?session_id=${session_id2}`)
+                      //console.log("AQUI1: ", session_id2)
+                      .then(response => {
+                        if (response.data.message === "GET request received") {
+                          axios.post(`/ticket/success?session_id=${session_id2}`)
+                            .then(response => {
+                              // Handle response from POST request
+                              console.log(response.data)
+                              // Close the new window
+                              newWindow.close();
+                              clearInterval(intervalId); // Clear the interval
+                              resolve(response.data);
+                              //ativar isto quando tiver a funcionar o pagamento
+                              sendDataApiNot();
+                              bought(event.id);
+                            })
+                            .catch(error => {
+                              // Handle error from POST request
+                              console.log(error);
+                              reject(error);
+                              //clearInterval(intervalId); // Clear the interval on error
+                            });
+                        } else {
+                          // Handle unexpected response from GET request
+                        }
+                      })
+                  }, 3000);  
+                  //   axios.get(`/ticket/success?session_id=${response.data.session_id}`)
+                  //   .then(response => {
+                  //     console.log(response.data)
+                  //     // Close the new window
+                  //     newWindow.close();
+                  //     clearInterval(intervalId); // Clear the interval
+                  //     resolve(response.data);
+                  //     //ativar isto quando tiver a funcionar o pagamento
+                  //     sendDataApiNot();
+                  //     bought(event.id);
+                  //   })
+                  //   .catch(error => {
+                  //     console.log(error);
+                  //     reject(error);
+                  //     //clearInterval(intervalId); // Clear the interval on error
+                  //   });
+                  // }, 3000);
                 });
       
                 checkPaymentStatus.then(successResponse => {
