@@ -73,59 +73,64 @@ function MyTickets() {
           });
       }
 
-      const handleTicketTrade = (ticketId, email) => {
+      const handleTicketTrade = async (ticketId, email) => {
         const sellerEmail = localStorage.getItem('email');
         const sellerId = userData.user_id; // replace with the actual seller ID
-        const buyerId = 3; // replace with the actual buyer ID
-        //const buyerId = getBuyerId(email);
-        const buyerEmail = email; // replace with the actual buyer email
-        console.log(ticketId, sellerId, email, buyerId, buyerEmail);
+        try {
+          const buyerId = await getBuyerId(email);
+          const buyerEmail = email; // replace with the actual buyer email
+          console.log(ticketId, sellerId, email, buyerId, buyerEmail);
       
-        axios.get(`/ticket/${ticketId}/trade`, {
-          params: {
-            seller_id: sellerId,
-            seller_email: sellerEmail,
-            buyer_id: buyerId,
-            buyer_email: buyerEmail
-          }
-        })
-          .then(response => {
-            if (response.status === 200) {
-              // Ticket traded successfully, complete the trade
+          const response = await axios.get(`/ticket/${ticketId}/trade`, {
+            params: {
+              seller_id: sellerId,
+              seller_email: sellerEmail,
+              buyer_id: buyerId,
+              buyer_email: buyerEmail
+            }
+          });
+      
+          if (response.status === 200) {
+            // Ticket traded successfully, complete the trade
             const sellUrl = response.data.url;
             console.log(sellUrl);
             // Ticket traded successfully, update UI or redirect to a confirmation page
             console.log('Ticket traded successfully!');
-            
+                  
             // Make a POST request to /notification
-            axios
-              .post('/notification', {
-                to: buyerEmail,
-                subject: 'Ticket trade confirmation',
-                message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,
-              })
-              .then((response) => {
-                console.log('Email sent successfully!');
-              })
-              .catch((error) => {
-                console.log('Error occurred while sending email.');
-              });
+            await axios.post('/notification', {
+              to: buyerEmail,
+              subject: 'Ticket trade confirmation',
+              message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,
+            });
+      
+            console.log('Email sent successfully!');
+            alert("Email of the sale Confirmation sent to the Buyer!")
+            window.location.href = '/';
           } else {
             // Error occurred, handle the error
             console.log('Error occurred while trading ticket.');
-      }
-          })
-          .catch(error => {
-            // Network error occurred, handle the error
-            console.log('Network error occurred while trading ticket.');
-          });
-
+          }
+        } catch (error) {
+          // Handle errors
+          console.log(error);
+        }
+      
         setEmail('');
       };
 
-      //function gettBuyerId(email){
-        //chamar api do joao, para dado mail da pessoa, obter id
-      //}
+      function getBuyerId(email){
+        return axios.get(`/user/email/${email}`)
+          .then(response => {
+            const buyerId = response.data.id;
+            console.log(buyerId);
+            return buyerId;
+          })
+          .catch(error => {
+            console.log('Error occurred while getting buyer ID.');
+            throw error;
+          });
+      }
 
 
       return (

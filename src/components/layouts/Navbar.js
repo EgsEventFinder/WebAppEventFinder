@@ -37,7 +37,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                             <div className="gpt3__navbar-menu_container-links">
                               <Link to="/myProfile"><p>Profile</p></Link>
                               <Link to="/myTickets"><p>My Tickets</p></Link>
-                              <Link to="/myGroups"><p>My Groups</p></Link>
+                              {/* <Link to="/myGroups"><p>My Groups</p></Link> */}
                             </div>
                           </div>
                           )}

@@ -84,7 +84,7 @@ function Tickets(props) {
                     axios.get(`/ticket/success?session_id=${session_id2}`)
                       //console.log("AQUI1: ", session_id2)
                       .then(response => {
-                        if (response.data.message === "GET request received") {
+                        if (response.data.message === "Payment was successful") {
                           axios.post(`/ticket/success?session_id=${session_id2}`)
                             .then(response => {
                               // Handle response from POST request
