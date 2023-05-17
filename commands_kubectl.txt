@@ -1,0 +1,7 @@
+docker buildx build --platform linux/amd64 --network=host -t registry.deti:5000/egs-eventfinder/webapp:v1 .
+docker push registry.deti:5000/egs-eventfinder/webapp:v1
+
+kubectl apply -f deployment.yaml
+kubectl get pods -n egs-eventfinder
+
+kubectl delete -f deployment.yaml

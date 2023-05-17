@@ -1,6 +1,7 @@
 {
   "name": "event-finder",
   "version": "0.1.0",
+  "homepage": "http://webappfinder.deti",
   "private": true,
   "proxy": "http://127.0.0.1:5001",
   "dependencies": {
@@ -19,7 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --host webappfinder.deti --port 80",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
