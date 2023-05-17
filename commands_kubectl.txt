@@ -5,3 +5,26 @@ kubectl apply -f deployment.yaml
 kubectl get pods -n egs-eventfinder
 
 kubectl delete -f deployment.yaml
+
+
+REPOSTA BOT-----------
+
+To access your React app running in a Kubernetes cluster through an Ingress resource, you need to follow these steps:
+
+Verify that your Kubernetes cluster is properly set up and running. You can use the kubectl cluster-info command to check the status of your cluster.
+
+Ensure that Traefik (the ingress controller) is deployed and running in your cluster. You can check the Traefik pods by running kubectl get pods -n kube-system. If Traefik is not running, you'll need to deploy it first.
+
+Make sure your Ingress resource is created in the correct namespace (egs-eventfinder). You can check if it's deployed by running kubectl get ingress -n egs-eventfinder. Verify that the status is "Running" and that the Ingress has an external IP assigned.
+
+Add an entry to your local machine's hosts file to map the hostname webappfinder.deti to the external IP of your cluster's ingress controller. You can find the external IP by running kubectl get ingress -n egs-eventfinder and checking the "ADDRESS" column. Edit the hosts file (located at /etc/hosts on Unix-like systems or C:\Windows\System32\Drivers\etc\hosts on Windows) and add the following line:
+
+<external-IP> webappfinder.deti
+
+Replace <external-IP> with the actual IP address.
+
+Save the changes to the hosts file.
+
+Open a browser and navigate to http://webappfinder.deti. The request will be directed to Traefik, which will route it to your React app running in the Kubernetes cluster. The React app should now be accessible in your browser.
+
+Note: It might take some time for the changes to propagate and for the DNS resolution to work. If you encounter any issues, verify that your Ingress resource is correctly configured and that Traefik is running properly in your cluster.
