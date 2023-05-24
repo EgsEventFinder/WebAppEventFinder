@@ -4,23 +4,23 @@ import axios from 'axios';
 
 function EventoForm() {
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('accessToken'); // get token from localStorage
-    //     console.log(token);
-    //     axios.get('/verifyToken', {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //     })
-    //     .then(response => {
-    //         console.log(response.data.user_id);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //         localStorage.removeItem("accessToken");
-    //         window.location.href = 'http://localhost:3000';
-    //     });
-    // }, []);
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken'); // get token from localStorage
+        console.log(token);
+        axios.get('/verifyToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            console.log(response.data.user_id);
+        })
+        .catch(error => {
+            console.log(error);
+            localStorage.removeItem("accessToken");
+            window.location.href = 'http://localhost:3000';
+        });
+    }, []);
 
     //constantes para adicionar evento ou atualizar
     const [name, setName] = useState('');
