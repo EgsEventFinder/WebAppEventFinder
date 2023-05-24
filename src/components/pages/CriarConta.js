@@ -87,7 +87,7 @@ function CriarConta() {
         if (response.status === 200) {
           console.log("Entrou");
           console.log(response.data.link);
-          sendDataApiNot(response.data.link);
+          //sendDataApiNot(response.data.link);
         } else {
           throw new Error(response.status);
         }
