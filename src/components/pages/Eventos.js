@@ -27,7 +27,7 @@ function Eventos() {
     }, []);
 
     useEffect(() => {
-        axios.get('/events')
+        axios.get('http://127.0.0.1:8000/events')
           .then(response => {
             console.log(response.data);
             setEvents(response.data)
