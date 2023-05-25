@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:14-alpine
+FROM node:14-alpine as build
 
 # Set the working directory to /app
 WORKDIR /app
@@ -11,13 +11,18 @@ COPY . /app
 RUN npm config set registry https://registry.npmjs.org/
 RUN npm install -g npm@latest && npm cache clean --force && npm install
 
+# Build the React app
+RUN npm run build
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
+# Use NGINX as the production server
+FROM nginx:latest
 
-# Define environment variable
-ENV NODE_ENV production
+# Copy the built app from the build stage to the NGINX public directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Run app.js when the container launches
-CMD ["npm", "start"]
+# Expose port 80 to serve the app
+EXPOSE 80
+
+# Start NGINX when the container launches
+CMD ["nginx", "-g", "daemon off;"]
 
