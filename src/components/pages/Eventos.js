@@ -11,7 +11,7 @@ function Eventos() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token)
-        axios.get('/verifyToken', {
+        axios.get('http://127.0.0.1:5001/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
