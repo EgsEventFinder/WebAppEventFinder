@@ -17,6 +17,11 @@ spec:
       containers:
         - name: app
           image: registry.deti:5000/egs-eventfinder/webapp:v1
+          env:
+          - name: HOST
+            value: webappfinder.deti
+          - name: DANGEROUSLY_DISABLE_HOST_CHECK
+            value: true
           resources:
             requests:
               memory: "32Mi"

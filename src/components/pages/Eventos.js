@@ -28,7 +28,10 @@ function Eventos() {
 
     useEffect(() => {
         axios.get('/events')
-          .then(response => setEvents(response.data))
+          .then(response => {
+            console.log(response.data);
+            setEvents(response.data)
+        })
           .catch(error => console.log(error));
     }, []);
 
