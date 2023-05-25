@@ -20,6 +20,9 @@ FROM nginx:latest
 # Copy the built app from the build stage to the NGINX public directory
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Add the NGINX configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80 to serve the app
 EXPOSE 80
 

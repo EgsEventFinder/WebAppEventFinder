@@ -20,7 +20,7 @@ function MyTickets() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token);
-        axios.get('/verifyToken', {
+        axios.get('http://127.0.0.1:5001/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -98,7 +98,7 @@ function MyTickets() {
             console.log('Ticket traded successfully!');
                   
             // Make a POST request to /notification
-            await axios.post('/notification', {
+            await axios.post('http://localhost:3003/notification', {
               to: buyerEmail,
               subject: 'Ticket trade confirmation',
               message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,

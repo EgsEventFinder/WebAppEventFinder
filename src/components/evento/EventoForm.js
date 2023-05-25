@@ -7,7 +7,7 @@ function EventoForm() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token);
-        axios.get('/verifyToken', {
+        axios.get('http://127.0.0.1:5001/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -175,7 +175,7 @@ function EventoForm() {
         //console.log(data.name);
         const { name } = data;
 
-        axios.post('/group', { name })
+        axios.post('http://localhost:3003/group', { name })
             .then(response => {
             console.log(response.data);
             // handle response data here
@@ -194,7 +194,7 @@ function EventoForm() {
             console.log(emails);
             // Use the retrieved email addresses as needed
             // handle response data here
-            axios.post('/notification', {
+            axios.post('http://localhost:3003/notification', {
                 to: emails, // or an array of email addresses
                 subject: 'Novo Evento Disponível!',
                 message: `Está Disponivel um novo evento(${name})no WebSite! Check it out!`
@@ -215,7 +215,7 @@ function EventoForm() {
     }
 
     function sendNotGroupEventUpdate(event_name){
-        axios.get(`/group/${event_name}`)
+        axios.get(`http://localhost:3003/group/${event_name}`)
                 .then(response => {
                     console.log(response.data);
                     // handle group response here
@@ -227,7 +227,7 @@ function EventoForm() {
                         message: `O evento ${event_name} foi Atualizado! Check it out!`
                       };
                       
-                    axios.post('/groupnotification', data)
+                    axios.post('http://localhost:3003/groupnotification', data)
                     .then(response => {
                         console.log('API response:', response.data);
                     })
@@ -243,14 +243,14 @@ function EventoForm() {
     }
 
     function deleteGroup(event_name){
-        axios.get(`/group/${event_name}`)
+        axios.get(`http://localhost:3003/group/${event_name}`)
                 .then(response => {
                     console.log(response.data);
                     // handle group response here
                     //adicionar utilizador ao grupo
                     const groupId = response.data.id; 
                     axios
-                        .delete(`/group/${groupId}`)
+                        .delete(`http://localhost:3003/group/${groupId}`)
                         .then(response => {
                         console.log(response.data);
                         // handle response data here

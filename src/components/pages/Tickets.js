@@ -67,7 +67,7 @@ function Tickets(props) {
       
           try {
             const token = localStorage.getItem('accessToken'); // get token from localStorage
-            await axios.get('/verifyToken', {
+            await axios.get('http://127.0.0.1:5001/verifyToken', {
               headers: {
                 'Authorization': `Bearer ${token}`
               }
@@ -203,7 +203,7 @@ function Tickets(props) {
           message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
         };
     
-        axios.post('/notification', postData)
+        axios.post('http://localhost:3003/notification', postData)
           .then((response) => {
             console.log(response.data);
             window.location.href = 'http://localhost:3000/myTickets';

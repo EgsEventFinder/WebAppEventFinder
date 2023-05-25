@@ -19,7 +19,7 @@ function Notifications() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token)
-        axios.get('/verifyToken', {
+        axios.get('http://127.0.0.1:5001/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -38,7 +38,7 @@ function Notifications() {
         const confirmDelete = window.confirm("Are you sure you want to delete this notification?");
     
         if (confirmDelete) {
-            axios.delete(`/notification/remove/id/${not_id}`)
+            axios.delete(`http://localhost:3003/notification/remove/id/${not_id}`)
                 .then(response => {
                     // handle success
                     console.log(response)
