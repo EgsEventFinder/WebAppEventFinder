@@ -85,7 +85,7 @@ function Tickets(props) {
                       //console.log("AQUI1: ", session_id2)
                       .then(response => {
                         if (response.data.message === "Payment was successful") {
-                          axios.post(`/ticket/success?session_id=${session_id2}`)
+                          axios.post(`http://bookingapi.deti/ticket/success?session_id=${session_id2}`)
                             .then(response => {
                               // Handle response from POST request
                               console.log(response.data)
