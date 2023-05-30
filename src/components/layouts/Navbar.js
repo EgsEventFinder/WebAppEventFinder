@@ -5,6 +5,7 @@ import React from "react";
 import Container2 from './Container2'
 import logo from '../../img/costs_logo.png'
 import './navbar.css'
+import { FaTicketAlt } from 'react-icons/fa';
 
 function Navbar({ isAuthenticated, onLogout }) {
     const location = useLocation();
@@ -18,7 +19,10 @@ function Navbar({ isAuthenticated, onLogout }) {
     return ( 
         <nav className="navbar">
             <Container2>
-                <Link to ="/"><img className="img-logo" src={logo} alt="Event Finder"/></Link>
+                {/* <Link to ="/"><img className="img-logo" src={logo} alt="Event Finder"/></Link> */}
+                <Link to="/">
+                  <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FFB900'}} />
+                </Link>
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Eventos</Link></li>
@@ -35,7 +39,6 @@ function Navbar({ isAuthenticated, onLogout }) {
                           {toggleMenu && (
                           <div className="gpt3__navbar-menu_container scale-up-center">
                             <div className="gpt3__navbar-menu_container-links">
-                              <Link to="/myProfile"><p>Profile</p></Link>
                               <Link to="/myTickets"><p>My Tickets</p></Link>
                               {/* <Link to="/myGroups"><p>My Groups</p></Link> */}
                             </div>

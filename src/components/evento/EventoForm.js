@@ -119,6 +119,15 @@ function EventoForm() {
             .then(response => {
                 console.log(response.data);
                 deleteGroup(response.data.name);
+                //delete tickets
+                axios.delete(`http://bookingapi.deti/ticket/event/${eventId}`)
+                    .then(response => {
+                    console.log(response.data);  
+                    })
+                    .catch(error => {
+                    console.error(error);
+                    // Handle error
+                    });
         })
         .catch(error => {
         console.error(error);
