@@ -20,7 +20,7 @@ function MyTickets() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token);
-        axios.get('http://127.0.0.1:5001/verifyToken', {
+        axios.get('http://app-authentication.deti/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -32,14 +32,14 @@ function MyTickets() {
         .catch(error => {
             console.log(error);
             localStorage.removeItem("accessToken");
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'http://webappfinder.deti';
         });
     }, []);
 
     useEffect(() => {
         const userId = userData.user_id;
         if (userId) {
-          axios.get(`/ticket/user/tickets?user_id=${userId}`)
+          axios.get(`http://bookingapi.deti/ticket/user/tickets?user_id=${userId}`)
             .then(response => {
               console.log(response.data.tickets);
               setTickets(response.data.tickets);
@@ -53,7 +53,7 @@ function MyTickets() {
 
       useEffect(() => {
         const fetchEvents = async () => {
-          const eventsPromises = tickets.map(ticket => axios.get(`/events/${ticket.event_id}`));
+          const eventsPromises = tickets.map(ticket => axios.get(`http://events-api.deti/events/${ticket.event_id}`));
           const eventsData = await Promise.all(eventsPromises);
           setEvents(eventsData.map(event => event.data));
         };
@@ -63,10 +63,10 @@ function MyTickets() {
       function deleteTicket(ticket_id) {
         const userId = userData.user_id;
         axios
-          .delete(`/ticket/${ticket_id}`, { data: { user_id: userId } })
+          .delete(`http://bookingapi.deti/ticket/${ticket_id}`, { data: { user_id: userId } })
           .then((response) => {
             console.log(response.data.message); // Display success message in console
-            window.location.href = 'http://localhost:3000/myTickets';
+            window.location.href = 'http://webappfinder.deti/myTickets';
           })
           .catch((error) => {
             console.log(error.response.data.message); // Display error message in console
@@ -81,7 +81,7 @@ function MyTickets() {
           const buyerEmail = email; // replace with the actual buyer email
           console.log(ticketId, sellerId, email, buyerId, buyerEmail);
       
-          const response = await axios.get(`/ticket/${ticketId}/trade`, {
+          const response = await axios.get(`http://bookingapi.deti/ticket/${ticketId}/trade`, {
             params: {
               seller_id: sellerId,
               seller_email: sellerEmail,
@@ -98,7 +98,7 @@ function MyTickets() {
             console.log('Ticket traded successfully!');
                   
             // Make a POST request to /notification
-            await axios.post('http://localhost:3003/notification', {
+            await axios.post('http://notification-api.deti/notification', {
               to: buyerEmail,
               subject: 'Ticket trade confirmation',
               message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,
@@ -120,7 +120,7 @@ function MyTickets() {
       };
 
       function getBuyerId(email){
-        return axios.get(`/user/email/${email}`)
+        return axios.get(`http://app-authentication.deti/user/email/${email}`)
           .then(response => {
             const buyerId = response.data.id;
             console.log(buyerId);

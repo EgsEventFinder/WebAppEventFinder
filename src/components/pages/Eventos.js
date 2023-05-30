@@ -11,7 +11,7 @@ function Eventos() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token)
-        axios.get('http://127.0.0.1:5001/verifyToken', {
+        axios.get('http://app-authentication.deti/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -27,7 +27,7 @@ function Eventos() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/events')
+        axios.get('http://events-api.deti/events')
           .then(response => {
             console.log(response.data);
             setEvents(response.data)

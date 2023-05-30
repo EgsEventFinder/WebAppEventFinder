@@ -7,7 +7,7 @@ function Eventos() {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        axios.get('/events/')
+        axios.get('http://events-api.deti/events/')
           .then(response => setEvents(response.data))
           .catch(error => console.log(error));
     }, []);

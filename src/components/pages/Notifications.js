@@ -9,7 +9,7 @@ function Notifications() {
     const email = localStorage.getItem("email");
 
     useEffect(() => {
-        axios.get(`http://localhost:3003/notification/${email}`)
+        axios.get(`http://notification-api.deti/notification/${email}`)
         .then(response => setNotifications(response.data))
         .catch((error) => {
             console.log(error);
@@ -19,7 +19,7 @@ function Notifications() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token)
-        axios.get('http://127.0.0.1:5001/verifyToken', {
+        axios.get('http://app-authentication.deti/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -30,7 +30,7 @@ function Notifications() {
         .catch(error => {
             console.log(error);
             localStorage.removeItem("accessToken");
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'http://webappfinder.deti';
         });
     }, []);
 
@@ -38,12 +38,12 @@ function Notifications() {
         const confirmDelete = window.confirm("Are you sure you want to delete this notification?");
     
         if (confirmDelete) {
-            axios.delete(`http://localhost:3003/notification/remove/id/${not_id}`)
+            axios.delete(`http://notification-api.deti/notification/delete/id/${not_id}`)
                 .then(response => {
                     // handle success
                     console.log(response)
                     alert("Notificação Eliminada com Sucesso!");
-                    window.location.href = 'http://localhost:3000/notifications';
+                    window.location.href = 'http://webappfinder.deti/notifications';
                 })
                 .catch(error => {
                     // handle error

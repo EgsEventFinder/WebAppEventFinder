@@ -35,7 +35,7 @@ function App() {
   function handleLogout() {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
-      axios.delete('/logout', {
+      axios.delete('http://app-authentication.deti/logout', {
         headers: { Authorization: `Bearer ${accessToken}` }
       })
       .then(response => {

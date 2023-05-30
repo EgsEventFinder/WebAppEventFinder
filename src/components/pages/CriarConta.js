@@ -52,10 +52,10 @@ function CriarConta() {
 
       console.log(postData)
   
-      axios.post('http://localhost:3003/notification', postData)
+      axios.post('http://notification-api.deti/notification', postData)
         .then((response) => {
           console.log(response.data);
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = 'http://webappfinder.deti/login';
           // do something with the response here
         })
         .catch((error) => {
@@ -82,7 +82,7 @@ function CriarConta() {
       password: password,
     };
   
-    axios.post('/register', postData)
+    axios.post('http://app-authentication.deti/register', postData)
       .then(response => {
         if (response.status === 200) {
           console.log("Entrou");

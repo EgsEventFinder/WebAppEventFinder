@@ -7,7 +7,7 @@ function EventoForm() {
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
         console.log(token);
-        axios.get('http://127.0.0.1:5001/verifyToken', {
+        axios.get('http://app-authentication.deti/verifyToken', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -18,7 +18,7 @@ function EventoForm() {
         .catch(error => {
             console.log(error);
             localStorage.removeItem("accessToken");
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'http://webappfinder.deti';
         });
     }, []);
 
@@ -60,7 +60,7 @@ function EventoForm() {
       
         // Send a POST request to the API endpoint with the form data
         axios
-          .post("/events", formData)
+          .post("http://events-api.deti/events", formData)
           .then((response) => {
             // Do something with the response, such as show a success message
             console.log("Event created:", response.data.Event);
@@ -68,7 +68,7 @@ function EventoForm() {
             createGroup(response.data.Event);
             sendNotGroup(name);
             alert("Evento Criado Com Sucesso !");
-            window.location.href = 'http://localhost:3000/eventsManagement';
+            window.location.href = 'http://webappfinder.deti/eventsManagement';
           })
           .catch((error) => {
             console.error("Error creating event:", error);
@@ -115,7 +115,7 @@ function EventoForm() {
         event.preventDefault();
         //Eliminar grupo
         axios
-            .get(`/events/${eventId}`)
+            .get(`http://events-api.deti/events/${eventId}`)
             .then(response => {
                 console.log(response.data);
                 deleteGroup(response.data.name);
@@ -127,12 +127,12 @@ function EventoForm() {
         
 
         // TODO: send the event ID to the server to delete the event using axios
-        axios.delete(`/events/${eventId}`)
+        axios.delete(`http://events-api.deti/events/${eventId}`)
         .then(response => {
         console.log(response.data);
         // handle response data here
         alert("Evento Eliminado Com Sucesso !");
-        window.location.href = 'http://localhost:3000/eventsManagement';
+        window.location.href = 'http://webappfinder.deti/eventsManagement';
         })
         .catch(error => {
         console.error(error);
@@ -156,7 +156,7 @@ function EventoForm() {
         };
       
         // Send a POST request to the API endpoint with the form data
-        axios.put(`/events/${eventId}`, formData)
+        axios.put(`http://events-api.deti/events/${eventId}`, formData)
         .then(response => {
             console.log(response.data);
             // handle response data here
@@ -175,7 +175,7 @@ function EventoForm() {
         //console.log(data.name);
         const { name } = data;
 
-        axios.post('http://localhost:3003/group', { name })
+        axios.post('http://notification-api.deti/group', { name })
             .then(response => {
             console.log(response.data);
             // handle response data here
@@ -187,14 +187,14 @@ function EventoForm() {
     }
 
     function sendNotGroup(name){
-        axios.get('/users')
+        axios.get('http://app-authentication.deti/users')
             .then(response => {
             const users = response.data;
             const emails = users.map(user => user.email);
             console.log(emails);
             // Use the retrieved email addresses as needed
             // handle response data here
-            axios.post('http://localhost:3003/notification', {
+            axios.post('http://notification-api.deti/notification', {
                 to: emails, // or an array of email addresses
                 subject: 'Novo Evento Disponível!',
                 message: `Está Disponivel um novo evento(${name})no WebSite! Check it out!`
@@ -215,7 +215,7 @@ function EventoForm() {
     }
 
     function sendNotGroupEventUpdate(event_name){
-        axios.get(`http://localhost:3003/group/${event_name}`)
+        axios.get(`http://notification-api.deti/group/${event_name}`)
                 .then(response => {
                     console.log(response.data);
                     // handle group response here
@@ -227,7 +227,7 @@ function EventoForm() {
                         message: `O evento ${event_name} foi Atualizado! Check it out!`
                       };
                       
-                    axios.post('http://localhost:3003/groupnotification', data)
+                    axios.post('http://notification-api.deti/groupnotification', data)
                     .then(response => {
                         console.log('API response:', response.data);
                     })
@@ -243,14 +243,14 @@ function EventoForm() {
     }
 
     function deleteGroup(event_name){
-        axios.get(`http://localhost:3003/group/${event_name}`)
+        axios.get(`http://notification-api.deti/group/${event_name}`)
                 .then(response => {
                     console.log(response.data);
                     // handle group response here
                     //adicionar utilizador ao grupo
                     const groupId = response.data.id; 
                     axios
-                        .delete(`http://localhost:3003/group/${groupId}`)
+                        .delete(`http://notification-api.deti/group/${groupId}`)
                         .then(response => {
                         console.log(response.data);
                         // handle response data here
