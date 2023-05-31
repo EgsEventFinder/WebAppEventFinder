@@ -327,19 +327,31 @@ function EventoForm() {
     }
 
     function notDelete(event_name){
-        axios.post('http://notification-api.deti/notification', {
-                to: emails, // or an array of email addresses
-                subject: 'Evento Indisponível!',
-                message: `O Evento (${event_name}) encontra-se indisponível, tendo sido removido!`
-                })
+        axios.get(`http://notification-api.deti/group/${event_name}`)
                 .then(response => {
-                console.log(response.data); // handle successful response
-                console.log("Emails enviadoooooos")    
-            })
-            .catch(error => {
-            console.error(error);
-            // handle error here
-            });
+                    console.log(response.data);
+                    // handle group response here
+                    //adicionar utilizador ao grupo
+                    const groupId = response.data.id; 
+                    const data = {
+                        groupId: groupId,
+                        subject: 'Evento Atualizado!',
+                        message: `O Evento (${event_name}) encontra-se indisponível, tendo sido removido!`
+                      };
+                      
+                    axios.post('http://notification-api.deti/groupnotification', data)
+                    .then(response => {
+                        console.log('API response:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('API error:', error);
+                    });
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    // handle error here
+                });
     }
 
 
