@@ -335,7 +335,7 @@ function EventoForm() {
                     const groupId = response.data.id; 
                     const data = {
                         groupId: groupId,
-                        subject: 'Evento Atualizado!',
+                        subject: 'Evento Removido!',
                         message: `O Evento (${event_name}) encontra-se indisponível, tendo sido removido!`
                       };
                       
