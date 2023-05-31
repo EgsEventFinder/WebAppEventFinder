@@ -3,7 +3,7 @@ import { useState } from "react";
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import React from "react";
 import Container2 from './Container2'
-import logo from '../../img/costs_logo.png'
+//import logo from '../../img/costs_logo.png'
 import './navbar.css'
 import { FaTicketAlt } from 'react-icons/fa';
 
@@ -30,6 +30,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                     {isAuthenticated ? (
                     <>
                       <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
+                      <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li>
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       <li>
                         <div className="gpt3__navbar-menu">

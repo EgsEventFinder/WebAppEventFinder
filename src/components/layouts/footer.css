@@ -33,6 +33,6 @@
     color: #ffbb33;
 }
 
-.a:hover{
+.social_list .a:hover{
    transform: scale(2); 
 }

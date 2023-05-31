@@ -70,6 +70,7 @@ function App() {
             <Route exact path="/contacts" element={<Contactos />} />
             <Route exact path="/login" element={<Login onLogin={handleLogin} />} />
             <Route exact path="/createAccount" element={<CriarConta />} />
+            {/* <Route exact path="/eventsManagement" element={<EventManagement />} /> */}
             <Route exact path="/notifications" element={<Protected isAuthenticated={isAuthenticated}> <Notifications onChange={handleLogin}/> </Protected>} />
             <Route path="/eventsManagement" element={<Protected isAuthenticated={isAuthenticated}> <EventManagement onChange={handleLogin}/> </Protected>} />
             <Route path="/tickets/:id" element={<Protected isAuthenticated={isAuthenticated}> <Tickets onChange={handleLogin} onLogout={handleLogout}/> </Protected>} />

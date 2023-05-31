@@ -18,9 +18,11 @@ function EventoForm() {
         .catch(error => {
             console.log(error);
             localStorage.removeItem("accessToken");
-            window.location.href = 'http://webappfinder.deti';
+            //window.location.href = 'http://webappfinder.deti';
         });
     }, []);
+
+    
 
     //constantes para adicionar evento ou atualizar
     const [name, setName] = useState('');
@@ -33,7 +35,7 @@ function EventoForm() {
 
     //constantes para atualizar evento 
     const [name2, setName2] = useState('');
-    const [location2, setlocation2] = useState('');
+    const [location2, setLocation2] = useState('');
     const [category2, setCategory2] = useState('');
     const [description2, setDescription2] = useState('');
     const [date2, setDate2] = useState('');
@@ -43,6 +45,50 @@ function EventoForm() {
     //constante para remover evento
     const [eventId, setEventId] = useState('');
 
+    const [eventIds, setEventIds] = useState([]);
+    const [eventId2, setEventId2] = useState('');
+
+    useEffect(() => {
+        // Fetch the events data from the API
+        axios.get('http://events-api.deti/events')
+          .then(response => {
+            // Extract the event IDs from the response data
+            const ids = response.data.map(event => event.id);
+            setEventIds(ids);
+          })
+          .catch(error => {
+            console.error('Error fetching events:', error);
+          });
+    }, []);
+
+    useEffect(() => {
+        if (eventId2) {
+          axios.get(`http://events-api.deti/events/${eventId2}`)
+            .then(response => {
+              const eventData = response.data;
+              console.log(eventData);
+              setName2(eventData.name);
+              setLocation2(eventData.location);
+              setCategory2(eventData.type);
+              setDescription2(eventData.description);
+              const formattedDate = new Date(eventData.date).toISOString().split('T')[0];
+              setDate2(formattedDate);
+              setCapacity2(eventData.capacity);
+              setTickets2(eventData.tickets || []);
+            })
+            .catch(error => {
+              console.error('Error fetching event data:', error);
+            });
+        } else {
+          setName2('');
+          setLocation2('');
+          setCategory2('');
+          setDescription2('');
+          setDate2('');
+          setCapacity2('');
+          setTickets2([]);
+        }
+      }, [eventId2]);
 
     function handleSubmit(event) {
         event.preventDefault(); // prevent default form submission
@@ -98,11 +144,14 @@ function EventoForm() {
         setTickets2([...tickets2, { type: "", price: "" }]);
       };
       
-    const handleTicketChange2 = (index, event) => {
-    const updatedTickets2 = [...tickets2];
-    updatedTickets2[index][event.target.name] = event.target.value;
-    setTickets2(updatedTickets2);
-    };
+      const handleTicketChange2 = (index, event) => {
+        const { name, value } = event.target;
+        setTickets2(prevTickets => {
+          const updatedTickets = [...prevTickets];
+          updatedTickets[index][name] = value;
+          return updatedTickets;
+        });
+      };
     
     const handleTicketRemove2 = (index) => {
     const updatedTickets2 = [...tickets2];
@@ -165,13 +214,13 @@ function EventoForm() {
         };
       
         // Send a POST request to the API endpoint with the form data
-        axios.put(`http://events-api.deti/events/${eventId}`, formData)
+        axios.put(`http://events-api.deti/events/${eventId2}`, formData)
         .then(response => {
             console.log(response.data);
             // handle response data here
             sendNotGroupEventUpdate(name2);
             alert("Evento Atualizado Com Sucesso !");
-            //window.location.href = 'http://localhost:3000/eventsManagement';
+            window.location.href = 'http://webappfinder.deti/eventsManagement';
         })
         .catch(error => {
             console.error(error);
@@ -359,12 +408,16 @@ function EventoForm() {
             <form onSubmit={handleUpdate} style={{flex: 1, marginLeft: "30px", marginTop:"30px"}}> 
             <div>
                 <label htmlFor="eventId">ID of the event to update:</label>
-                <input
-                type="text"
-                id="eventId"
-                value={eventId}
-                onChange={(e) => setEventId(e.target.value)}
-                />
+                <select
+                    id="eventId2"
+                    value={eventId2}
+                    onChange={(e) => setEventId2(e.target.value)}
+                >
+                    <option value="">Select an event ID</option>
+                    {eventIds.map(id => (
+                    <option key={id} value={id}>{id}</option>
+                    ))}
+                </select>
             </div>
             <div>
                 <label htmlFor="name2">Name:</label>
@@ -373,6 +426,7 @@ function EventoForm() {
                 id="name2"
                 value={name2}
                 onChange={(e) => setName2(e.target.value)}
+                readOnly
                 />
             </div>
             <div>
@@ -381,7 +435,7 @@ function EventoForm() {
                 type="text"
                 id="location2"
                 value={location2}
-                onChange={(e) => setlocation2(e.target.value)}
+                onChange={(e) => setLocation2(e.target.value)}
                 />
             </div>
             <div>
@@ -433,7 +487,7 @@ function EventoForm() {
                     <button type="button" onClick={() => handleTicketRemove2(index2)}>Remove</button>
                     </div>
                 ))}
-                </div>
+            </div>
             <button className="btn" type="submit">Update</button>
             </form> 
         </div>
@@ -443,12 +497,16 @@ function EventoForm() {
         <form onSubmit={handleDelete} style={{marginTop: "30px", marginBottom:"50px"}}>
                 <div>
                 <label htmlFor="eventId">ID of the event to delete:</label>
-                <input
-                    type="text"
+                <select
                     id="eventId"
                     value={eventId}
                     onChange={(e) => setEventId(e.target.value)}
-                />
+                >
+                    <option value="">Select an event ID</option>
+                    {eventIds.map(id => (
+                    <option key={id} value={id}>{id}</option>
+                    ))}
+                </select>
                 </div>
                 <button className="btn" type="submit">Delete</button>
         </form>
