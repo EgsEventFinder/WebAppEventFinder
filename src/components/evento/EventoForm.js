@@ -18,7 +18,7 @@ function EventoForm() {
         .catch(error => {
             console.log(error);
             localStorage.removeItem("accessToken");
-            //window.location.href = 'http://webappfinder.deti';
+            window.location.href = 'http://webappfinder.deti';
         });
     }, []);
 
