@@ -177,7 +177,10 @@ function MyTickets() {
                   deleteTicket(ticket.ticket_id);
                 }
               };
-              setEvent_name2(event.name);
+              const handleSell = (index, event) => {
+                setSelectedTicketIndex(index);
+                setEvent_name2(event.name);
+              };
               return (
                 <div className="item" key={`${ticket.event_id}-${ticket.booking_date}`}>
                   <button className="delete-button" onClick={handleDelete}>X</button>
@@ -196,7 +199,7 @@ function MyTickets() {
                       </div>
                       <p>{event.location}</p>
                     </div>
-                    <button className="sell-button" onClick={() => setSelectedTicketIndex(index)}>Sell to other person</button>
+                    <button className="sell-button" onClick={() => handleSell(index, event)}>Sell to other person</button>
                   </div>
                   <div className="item-right">
                     <h2 className="num">{ticket.type}</h2>

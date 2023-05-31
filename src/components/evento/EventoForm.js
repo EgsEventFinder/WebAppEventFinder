@@ -167,6 +167,7 @@ function EventoForm() {
             .get(`http://events-api.deti/events/${eventId}`)
             .then(response => {
                 console.log(response.data);
+                notDelete(response.data.name);
                 deleteGroup(response.data.name);
                 //delete tickets
                 axios.delete(`http://bookingapi.deti/ticket/event/${eventId}`)
@@ -323,6 +324,22 @@ function EventoForm() {
                     console.error(error);
                     // handle error here
                 });
+    }
+
+    function notDelete(event_name){
+        axios.post('http://notification-api.deti/notification', {
+                to: emails, // or an array of email addresses
+                subject: 'Evento Indisponível!',
+                message: `O Evento (${event_name}) encontra-se indisponível, tendo sido removido!`
+                })
+                .then(response => {
+                console.log(response.data); // handle successful response
+                console.log("Emails enviadoooooos")    
+            })
+            .catch(error => {
+            console.error(error);
+            // handle error here
+            });
     }
 
 
