@@ -11,6 +11,8 @@ function Home(props) {
 
     if(!props.isAuthenticated){
         localStorage.removeItem('accessToken');
+        ///// adicionei isto, se houver problemas, remover proxima linha
+        localStorage.removeItem('email');
     }
 
     if (myData) {

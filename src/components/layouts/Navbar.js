@@ -20,8 +20,11 @@ function Navbar({ isAuthenticated, onLogout }) {
     
     useEffect(() => {
       const email = localStorage.getItem('email');
-      const username = email.split('@')[0];
-      setUsername(username);
+      if(email){
+        console.log (email);
+        const username = email.split('@')[0];
+        setUsername(username);
+      }
     }, []);
     return ( 
         <nav className="navbar">
