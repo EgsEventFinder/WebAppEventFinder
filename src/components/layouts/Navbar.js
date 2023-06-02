@@ -6,16 +6,23 @@ import Container2 from './Container2'
 //import logo from '../../img/costs_logo.png'
 import './navbar.css'
 import { FaTicketAlt } from 'react-icons/fa';
+import { useEffect } from "react";
 
 function Navbar({ isAuthenticated, onLogout }) {
     const location = useLocation();
 
     const [toggleMenu, setToggleMenu] = useState(false);
+    const [username, setUsername] = useState('');
 
     function handleLogoutClick() {
         onLogout();
       }
-
+    
+    useEffect(() => {
+      const email = localStorage.getItem('email');
+      const username = email.split('@')[0];
+      setUsername(username);
+    }, []);
     return ( 
         <nav className="navbar">
             <Container2>
@@ -27,11 +34,13 @@ function Navbar({ isAuthenticated, onLogout }) {
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Eventos</Link></li>
                     <li className="item_navbar"><Link to = "/contacts">Contactos</Link></li>
+                    
                     {isAuthenticated ? (
                     <>
                       <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
                       <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li>
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
+                      <li className="item_navbar"><p>User: {username}</p></li>
                       <li>
                         <div className="gpt3__navbar-menu">
                           {toggleMenu
