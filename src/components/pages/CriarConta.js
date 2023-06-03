@@ -107,7 +107,7 @@ function CriarConta() {
       <div className="container-login">
         <div className="wrap-login">
           <form className="login-form" onSubmit={handleSubmit}>
-            <span className="login-form-title">Criar Conta</span>
+            <span className="login-form-title">Create Account</span>
             <div className="wrap-input">
               <input
                 className={firstName ? "has-val input" : "input"}
@@ -169,14 +169,14 @@ function CriarConta() {
 
             <div className="container-login-form-btn">
               <button onClick={deleteErrorMessage} type="submit" className="login-form-btn">
-                Criar conta
+                Create Account
               </button>
             </div>
 
             <div className="text-center">
-              <span className="txt1">Já possui conta? </span>
+              <span className="txt1">Already have an account? </span>
               <a className="txt2" href="/login">
-                Fazer login
+                Login
               </a>
             </div>
 

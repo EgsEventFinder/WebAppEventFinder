@@ -63,7 +63,7 @@ function Login(props) {
       <div className="container-login">
         <div className="wrap-login">
           <form className="login-form" onSubmit={handleSubmit}>
-            <span className="login-form-title"> Bem vindo </span>
+            <span className="login-form-title"> Welcome </span>
             <div className="wrap-input">
               <input
                 className={email !== "" ? "has-val input" : "input"}
@@ -89,9 +89,9 @@ function Login(props) {
             </div>
 
             <div className="text-center">
-              <span className="txt1">Não possui conta? </span>
+              <span className="txt1">Don't have an account? </span>
               <a className="txt2" href="/createAccount">
-                Criar conta
+                Create Account
               </a>
             </div>
             {errorMessage && (

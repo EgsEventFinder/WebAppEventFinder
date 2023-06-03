@@ -11,6 +11,9 @@ import { useEffect } from "react";
 function Navbar({ isAuthenticated, onLogout }) {
     const location = useLocation();
 
+    const [isAdmin, setisAdmin] = useState(false);
+
+
     const [toggleMenu, setToggleMenu] = useState(false);
     const [username, setUsername] = useState('');
 
@@ -24,6 +27,9 @@ function Navbar({ isAuthenticated, onLogout }) {
         console.log (email);
         const username = email.split('@')[0];
         setUsername(username);
+        if(username === 'eventfinderteste'){
+          setisAdmin(true);
+        }
       }
     }, []);
     return ( 
@@ -35,13 +41,13 @@ function Navbar({ isAuthenticated, onLogout }) {
                 </Link>
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
-                    <li className="item_navbar"><Link to = "/events">Eventos</Link></li>
-                    <li className="item_navbar"><Link to = "/contacts">Contactos</Link></li>
+                    <li className="item_navbar"><Link to = "/events">Events</Link></li>
+                    <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li>
                     
                     {isAuthenticated ? (
                     <>
-                      <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
-                      <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li>
+                      {/* <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li> */}
+                      {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       <li className="item_navbar"><p>User: {username}</p></li>
                       <li>
@@ -53,6 +59,8 @@ function Navbar({ isAuthenticated, onLogout }) {
                           <div className="gpt3__navbar-menu_container scale-up-center">
                             <div className="gpt3__navbar-menu_container-links">
                               <Link to="/myTickets"><p>My Tickets</p></Link>
+                              <Link to = "/notifications">Notifications</Link>
+                              {isAdmin ? ( <Link to="/eventsManagement"><p>Admin</p></Link> ) : ( <></> )}
                               {/* <Link to="/myGroups"><p>My Groups</p></Link> */}
                             </div>
                           </div>

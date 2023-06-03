@@ -49,11 +49,11 @@ function Contactos() {
             <FaTwitter />
           </a>
         </div>
-        <h2>Contacte-nos</h2>
-        <p>Tem dúvidas, sugestões ou apenas quer dizer olá? Use o formulário abaixo para nos enviar um email!</p>
+        <h2>Contact Us</h2>
+        <p>Have questions, suggestions or just want to say hello? Use the form below to send us an email!</p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Nome:</label>
+            <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="form-group">
@@ -61,10 +61,10 @@ function Contactos() {
             <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label htmlFor="message">Mensagem:</label>
+            <label htmlFor="message">Message:</label>
             <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
           </div>
-          <button type="submit">Enviar</button>
+          <button type="submit">Send</button>
         </form>
       </div>
     </div>

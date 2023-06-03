@@ -38,7 +38,7 @@ function Eventos() {
     return (  
         <>  
             <div className = "home_container">
-                <h1>Eventos Disponíveis </h1>
+                <h1>Available Events </h1>
             </div>
             <div className = "container_body">
                 
@@ -60,11 +60,11 @@ function Eventos() {
                                 <div className="additional-info">
                                     <p className="info">
                                         <i className="fas fa-map-marker-alt"></i>
-                                        Lotação: {event.capacity}
+                                        Capacity: {event.capacity}
                                     </p>
                                     <p className="info">
                                         <i className="far fa-calendar-alt"></i>
-                                        Data: {event.date}
+                                        Date: {event.date}
                                     </p>
 
                                     <p className="info description">
