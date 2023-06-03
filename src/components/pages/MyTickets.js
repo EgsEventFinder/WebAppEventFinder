@@ -16,7 +16,6 @@ function MyTickets() {
     });
     const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
     const [email, setEmail] = useState('');
-    const [event_name2, setEvent_name2] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken'); // get token from localStorage
@@ -104,7 +103,7 @@ function MyTickets() {
               subject: 'Ticket trade confirmation',
               message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,
             });
-            add_to_group(event_name2, buyerEmail);
+      
             console.log('Email sent successfully!');
             alert("Email of the sale Confirmation sent to the Buyer!")
             window.location.href = '/';
@@ -133,33 +132,6 @@ function MyTickets() {
           });
       }
 
-      function add_to_group(event_name, buyerEmail){
-        axios.get(`http://notification-api.deti/group/${event_name}`)
-          .then(response => {
-            console.log(response.data);
-            // handle group response here
-            //adicionar utilizador ao grupo
-            const groupId = response.data.id;
-            const members = [buyerEmail]; // replace with your member list
-            axios
-                .put(`http://notification-api.deti/group/${groupId}`, { members })
-                .then(response => {
-                console.log(response.data);
-                // handle response data here
-                // alert("Member added to group");
-                })
-                .catch(error => {
-                console.error(error);
-                // handle error here
-                });
-        })
-        .catch(error => {
-            console.error(error);
-            // handle error here
-        });
-        
-        alert("Ticket Bought successfully");
-    }
 
       return (
         <>
@@ -176,10 +148,6 @@ function MyTickets() {
                 if (window.confirm("Are you sure you want to delete this ticket?")) {
                   deleteTicket(ticket.ticket_id);
                 }
-              };
-              const handleSell = (index, event) => {
-                setSelectedTicketIndex(index);
-                setEvent_name2(event.name);
               };
               return (
                 <div className="item" key={`${ticket.event_id}-${ticket.booking_date}`}>
@@ -199,7 +167,7 @@ function MyTickets() {
                       </div>
                       <p>{event.location}</p>
                     </div>
-                    <button className="sell-button" onClick={() => handleSell(index, event)}>Sell to other person</button>
+                    <button className="sell-button" onClick={() => setSelectedTicketIndex(index)}>Sell to other person</button>
                   </div>
                   <div className="item-right">
                     <h2 className="num">{ticket.type}</h2>
