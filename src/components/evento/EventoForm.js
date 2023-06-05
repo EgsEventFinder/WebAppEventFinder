@@ -282,8 +282,8 @@ function EventoForm() {
                     const groupId = response.data.id; 
                     const data = {
                         groupId: groupId,
-                        subject: 'Evento Atualizado!',
-                        message: `O evento ${event_name} foi Atualizado! Check it out!`
+                        subject: 'Event Updated!',
+                        message: `We have just updated the details for Event ${event_name}. Take a moment to discover the latest changes and enhancements – you won't want to miss out!`
                       };
                       
                     axios.post('http://notification-api.deti/groupnotification', data)
@@ -335,8 +335,8 @@ function EventoForm() {
                     const groupId = response.data.id; 
                     const data = {
                         groupId: groupId,
-                        subject: 'Evento Removido!',
-                        message: `O Evento (${event_name}) encontra-se indisponível, tendo sido removido!`
+                        subject: 'Event Deleted!',
+                        message: `Important Announcement: Event ${event_name} has been Removed!`
                       };
                       
                     axios.post('http://notification-api.deti/groupnotification', data)
