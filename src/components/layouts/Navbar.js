@@ -39,6 +39,8 @@ function Navbar({ isAuthenticated, onLogout }) {
                 <Link to="/">
                   <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FFB900'}} />
                 </Link>
+                {isAuthenticated ? ( <li className="item_navbar"><p>Welcome {username}</p></li> ) : ( <></> )}
+                {isAuthenticated ? ( <></> ) : ( <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li> )}
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Events</Link></li>
@@ -50,7 +52,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                       {/* <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li> */}
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
-                      <li className="item_navbar"><p>{username}</p></li>
+                      {/* <li className="item_navbar">{username}</li> */}
                       <li>
                         <div className="gpt3__navbar-menu">
                           {toggleMenu
