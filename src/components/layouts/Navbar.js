@@ -43,7 +43,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                     <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FDE74C'}} />
                   </Link>
                   <div className="username">
-                  {isAuthenticated ? ( <h3>Welcome {username}</h3> ) : ( <></> )}
+                  {isAuthenticated ? ( <h3>Logged as {username}</h3> ) : ( <></> )}
                   </div>
                 </div>
                 
