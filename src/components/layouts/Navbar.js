@@ -38,10 +38,16 @@ function Navbar({ isAuthenticated, onLogout }) {
         <nav className="navbar">
             <Container2>
                 {/* <Link to ="/"><img className="img-logo" src={logo} alt="Event Finder"/></Link> */}
-                <Link to="/">
-                  <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FFB900'}} />
-                </Link>
-                {isAuthenticated ? ( <li className="item_navbar">Welcome {username}</li> ) : ( <></> )}
+                <div className="icon">
+                  <Link to="/">
+                    <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FDE74C'}} />
+                  </Link>
+                  <div className="username">
+                  {isAuthenticated ? ( <h3>Welcome {username}</h3> ) : ( <></> )}
+                  </div>
+                </div>
+                
+                
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Events</Link></li>
@@ -53,7 +59,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                       <li className="item_navbar"><Link to="/myTickets">My Tickets</Link></li>
                       <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
-                      {isAdmin ? ( <Link to="/eventsManagement">Admin</Link> ) : ( <></> )}
+                      {isAdmin ? ( <li className="item_navbar"><Link to="/eventsManagement">Admin</Link></li> ) : ( <></> )}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       {/* <li className="item_navbar">{username}</li> */}
                       

@@ -1,5 +1,5 @@
 .footer{
-    background-color: #222;
+    background-color: #404E4D;
     text-align: center;
     padding: 1.2em;
     color: #fff;
@@ -30,7 +30,7 @@
 
 .copy_right span{
     font-weight: bold;
-    color: #ffbb33;
+    color: #FDE74C;
 }
 
 .social_list .a:hover{

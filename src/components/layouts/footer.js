@@ -5,13 +5,13 @@ function footer() {
     return ( 
         <footer className='footer'>
             <ul className='social_list'>
-                <li><a style={{color: '#FFB900'}} target='_blank' href="https://www.facebook.com">
+                <li><a style={{color: '#FDE74C'}} target='_blank' href="https://www.facebook.com">
                 <FaFacebook />
                 </a></li>
-                <li><a style={{color: '#FFB900'}} target='_blank' href="https://www.instagram.com">
+                <li><a style={{color: '#FDE74C'}} target='_blank' href="https://www.instagram.com">
                     <FaInstagram />
                 </a></li>
-                <li><a style={{color: '#FFB900'}} target='_blank' href="https://www.linkedin.com">
+                <li><a style={{color: '#FDE74C'}} target='_blank' href="https://www.linkedin.com">
                     <FaLinkedin />
                 </a></li>
             </ul>

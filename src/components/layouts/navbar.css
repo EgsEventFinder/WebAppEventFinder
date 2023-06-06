@@ -5,14 +5,17 @@
 .navbar{
     display: flex;
     justify-content: space-between;
-    background-color: #222;
-    padding: 0.2em;
+    background-color: #404E4D;
+    padding: 0.5em;
     align-items: center;
 }
 
-.navbar a{
-    font-size: 22px;
-
+.navbar h3{
+    font-size: 15px;
+    font-family: "trebuchet ms", sans-serif;
+    color: #FFF;
+    text-decoration: none;
+    font-weight: 500;
 }
 
 .list{
@@ -30,10 +33,11 @@
     color: #FFF;
     text-decoration: none;
     font-weight: 500;
+    font-size: 22px;
 }
 
 .item_navbar a:hover{
-    color: #ffbb33;
+    color: #FDE74C;
 }
 
 .gpt3__navbar-menu {
@@ -87,4 +91,15 @@
 
 .item_navbar p{
     color: #ffbb33;
+}
+
+.icon{
+    width: 100%;
+    display: flex;
+}
+
+.username{
+    width: 100%;
+    margin-left: 1em;
+    margin-top: 1em;
 }
