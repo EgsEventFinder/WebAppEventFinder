@@ -184,3 +184,7 @@
     color: #fff;
     font-size: 1.5em;
   }
+
+  .error-name a{
+    color: #fff;
+  }
