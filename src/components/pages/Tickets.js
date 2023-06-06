@@ -200,7 +200,7 @@ function Tickets(props) {
         const postData = {
           to: email,
           subject: "Ticket Bought!",
-          message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website`
+          message: `Hi ${email}, the ticket was bought successfully and is present on your page "My Tickets" on the website.`
         };
     
         axios.post('http://notification-api.deti/notification', postData)

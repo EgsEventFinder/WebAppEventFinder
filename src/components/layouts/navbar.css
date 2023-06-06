@@ -7,6 +7,12 @@
     justify-content: space-between;
     background-color: #222;
     padding: 1em;
+
+}
+
+.navbar a{
+    font-size: 22px;
+
 }
 
 .list{
@@ -20,8 +26,10 @@
 }
 
 .item_navbar a{
+    font-family: "trebuchet ms", sans-serif;
     color: #FFF;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .item_navbar a:hover{
@@ -41,10 +49,10 @@
 
 .gpt3__navbar-menu_container p {
     color: #fff;
-    font-family: 'Manrope', sans-serif;
+    font-family: "trebuchet ms", sans-serif;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: 22px;
+    /* line-height: 25px; */
     text-transform: capitalize;
 
     margin: 0 1rem;
@@ -58,7 +66,7 @@
     flex-direction: column;
     
     text-align: end;
-    background: #495c70;
+    background: #ffbb33;
     padding: 2rem;
     position: absolute;
     right: 0;

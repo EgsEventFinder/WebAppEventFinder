@@ -26,7 +26,7 @@ function Home(props) {
         <section className='home_container'>
             <h1>Welcome to <span>Event Finder</span></h1>
             <p>Find the events you want, right now!</p>
-            <LinkButton to="/events" text="Encontrar Evento" />
+            <LinkButton to="/events" text="Find Event" />
             <img src={tickets} alt="tickets"/>
         </section>
         

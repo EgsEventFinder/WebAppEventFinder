@@ -42,14 +42,15 @@ function Navbar({ isAuthenticated, onLogout }) {
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Events</Link></li>
-                    <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li>
+                    {isAuthenticated ? ( <></> ) : ( <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li> )}
+                    {/* <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li> */}
                     
                     {isAuthenticated ? (
                     <>
                       {/* <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li> */}
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
-                      <li className="item_navbar"><p>User: {username}</p></li>
+                      <li className="item_navbar"><p>{username}</p></li>
                       <li>
                         <div className="gpt3__navbar-menu">
                           {toggleMenu

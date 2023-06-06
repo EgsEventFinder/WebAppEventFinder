@@ -255,8 +255,8 @@ function EventoForm() {
             // handle response data here
             axios.post('http://notification-api.deti/notification', {
                 to: emails, // or an array of email addresses
-                subject: 'Novo Evento Disponível!',
-                message: `Está Disponivel um novo evento(${name})no WebSite! Check it out!`
+                subject: 'New Event Available!',
+                message: `There is a new available Event(${name}) on the WebSite! Check it out!`
                 })
                 .then(response => {
                 console.log(response.data); // handle successful response
@@ -283,7 +283,7 @@ function EventoForm() {
                     const data = {
                         groupId: groupId,
                         subject: 'Event Updated!',
-                        message: `We have just updated the details for Event ${event_name}. Take a moment to discover the latest changes and enhancements – you won't want to miss out!`
+                        message: `We have just updated the details for Event ${event_name}. Take a moment to discover the latest changes and enhancements, you dont want to miss out!`
                       };
                       
                     axios.post('http://notification-api.deti/groupnotification', data)
