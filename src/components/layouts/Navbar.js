@@ -56,7 +56,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                     
                     {isAuthenticated ? (
                     <>
-                      <li className="item_navbar"><Link to="/myTickets">My Tickets</Link></li>
+                      <li className="item_navbar"><Link to="/myTickets">Tickets</Link></li>
                       <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
                       {isAdmin ? ( <li className="item_navbar"><Link to="/eventsManagement">Admin</Link></li> ) : ( <></> )}
