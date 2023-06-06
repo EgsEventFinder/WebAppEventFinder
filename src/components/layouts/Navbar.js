@@ -41,7 +41,7 @@ function Navbar({ isAuthenticated, onLogout }) {
                 <Link to="/">
                   <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FFB900'}} />
                 </Link>
-                {isAuthenticated ? ( <li className="item_navbar"><p>Welcome {username}</p></li> ) : ( <></> )}
+                {isAuthenticated ? ( <li className="item_navbar">Welcome {username}</li> ) : ( <></> )}
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Events</Link></li>
@@ -50,10 +50,10 @@ function Navbar({ isAuthenticated, onLogout }) {
                     
                     {isAuthenticated ? (
                     <>
-                      <li className="item_navbar"><Link to="/myTickets"><p>My Tickets</p></Link></li>
+                      <li className="item_navbar"><Link to="/myTickets">My Tickets</Link></li>
                       <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
-                      {isAdmin ? ( <Link to="/eventsManagement"><p>Admin</p></Link> ) : ( <></> )}
+                      {isAdmin ? ( <Link to="/eventsManagement">Admin</Link> ) : ( <></> )}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       {/* <li className="item_navbar">{username}</li> */}
                       

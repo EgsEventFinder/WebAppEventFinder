@@ -6,15 +6,11 @@
     display: flex;
     justify-content: space-between;
     background-color: #222;
-    padding: 0.5em;
+    padding: 0.2em;
+    align-items: center;
 }
 
 .navbar a{
-    font-size: 22px;
-
-}
-
-.navbar p{
     font-size: 22px;
 
 }

@@ -1,7 +1,7 @@
 .footer{
     background-color: #222;
     text-align: center;
-    padding: 3em;
+    padding: 1.2em;
     color: #fff;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .copy_right{
-    margin-top: 2em;
+    margin-top: 0em;
 }
 
 .copy_right span{
