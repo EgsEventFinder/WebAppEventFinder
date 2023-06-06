@@ -99,9 +99,9 @@ function MyTickets() {
                   
             // Make a POST request to /notification
             await axios.post('http://notification-api.deti/notification', {
-              to: buyerEmail,
+              to: sellerEmail,
               subject: 'Ticket trade confirmation',
-              message: `Click on the following link to confirm the ticket trade with the user ${sellerEmail}: ${sellUrl}`,
+              message: `Click on the following link to confirm the ticket sell to the user ${buyerEmail}: ${sellUrl}`,
             });
       
             console.log('Email sent successfully!');
