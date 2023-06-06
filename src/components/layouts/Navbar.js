@@ -32,7 +32,9 @@ function Navbar({ isAuthenticated, onLogout }) {
         }
       }
     }, []);
+
     return ( 
+  
         <nav className="navbar">
             <Container2>
                 {/* <Link to ="/"><img className="img-logo" src={logo} alt="Event Finder"/></Link> */}
@@ -40,7 +42,6 @@ function Navbar({ isAuthenticated, onLogout }) {
                   <FaTicketAlt className="ticket-icon" size={60} style={{color: '#FFB900'}} />
                 </Link>
                 {isAuthenticated ? ( <li className="item_navbar"><p>Welcome {username}</p></li> ) : ( <></> )}
-                {isAuthenticated ? ( <></> ) : ( <li className="item_navbar"><Link to = "/contacts">Contacts</Link></li> )}
                 <ul className="list">
                     <li className="item_navbar"><Link to = "/">Home</Link></li>
                     <li className="item_navbar"><Link to = "/events">Events</Link></li>
@@ -49,27 +50,13 @@ function Navbar({ isAuthenticated, onLogout }) {
                     
                     {isAuthenticated ? (
                     <>
-                      {/* <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li> */}
+                      <li className="item_navbar"><Link to="/myTickets"><p>My Tickets</p></Link></li>
+                      <li className="item_navbar"><Link to = "/notifications">Notifications</Link></li>
                       {/* <li className="item_navbar"><Link to = "/eventsManagement">Admin</Link></li> */}
+                      {isAdmin ? ( <Link to="/eventsManagement"><p>Admin</p></Link> ) : ( <></> )}
                       <li className="item_navbar"><Link to = "/" onClick={handleLogoutClick}>Logout</Link></li>
                       {/* <li className="item_navbar">{username}</li> */}
-                      <li>
-                        <div className="gpt3__navbar-menu">
-                          {toggleMenu
-                            ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
-                            : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
-                          {toggleMenu && (
-                          <div className="gpt3__navbar-menu_container scale-up-center">
-                            <div className="gpt3__navbar-menu_container-links">
-                              <Link to="/myTickets"><p>My Tickets</p></Link>
-                              <Link to = "/notifications">Notifications</Link>
-                              {isAdmin ? ( <Link to="/eventsManagement"><p>Admin</p></Link> ) : ( <></> )}
-                              {/* <Link to="/myGroups"><p>My Groups</p></Link> */}
-                            </div>
-                          </div>
-                          )}
-                        </div>
-                        </li>
+                      
                     </>
                    
                     ) : (
