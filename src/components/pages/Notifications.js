@@ -53,7 +53,7 @@ function Notifications() {
 
     return (  
         <>  
-            <div className = "home_container">
+            <div className = "home_container_not">
                 <h1>Notifications </h1>
             </div>
             <div className = "container_body_not">
