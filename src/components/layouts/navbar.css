@@ -12,7 +12,7 @@
 
 .navbar h3{
     font-size: 15px;
-    font-family: "arial black", sans-serif;
+    font-family: "andale mono", monospace;
     color: #FFF;
     text-decoration: none;
     font-weight: 500;
@@ -29,12 +29,12 @@
 }
 
 .item_navbar a{
-    font-family: "arial black", sans-serif;
+    font-family: "andale mono", monospace;
     color: #FFF;
     text-decoration: none;
     font-weight: 500;
     font-size: 22px;
-    -webkit-text-stroke: 1px black; /* width and color */
+    -webkit-text-stroke: 0.5px black; /* width and color */
 }
 
 .item_navbar a:hover{

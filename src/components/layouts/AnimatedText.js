@@ -9,7 +9,7 @@ const quote ={
         opacity:1, 
         transition:{
             delay:0.5, // delay before animation starts
-            staggerChildren:0.08, // delay between each children
+            staggerChildren:0.20, // delay between each children
         }
     },
 
@@ -24,7 +24,7 @@ const singleWord ={
       opacity:1,
       y:0,
       transition:{
-          duration:1 //duration of animation
+          duration:4 //duration of animation
       }
   },
 
