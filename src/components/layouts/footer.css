@@ -1,7 +1,7 @@
 .footer{
     background-color: #404E4D;
     text-align: center;
-    padding: 2em;
+    padding: 2.8em;
     color: #fff;
 }
 
@@ -31,8 +31,47 @@
 .copy_right span{
     font-weight: bold;
     color: #FDE74C;
+    -webkit-text-stroke: 0.5px black; /* width and color */
 }
 
 .social_list .a:hover{
    transform: scale(2); 
+}
+
+/* For tablets /
+@media (max-width: 768px) {
+  .footer{
+    padding: 1em;
+  }
+
+  .social_list li{
+    margin: 0 0.5em;
+  }
+
+  .social_list svg{
+    font-size: 1.2em;
+  }
+
+  .copy_right{
+    margin-top: 0.5em;
+  }
+}
+
+/ For mobile phones */
+@media (max-width: 480px) {
+  .footer{
+    padding: 0.5em;
+  }
+
+  .social_list li{
+    margin: 0 0.25em;
+  }
+
+  .social_list svg{
+    font-size: 1em;
+  }
+
+  .copy_right{
+    margin-top: 0.25em;
+  }
 }

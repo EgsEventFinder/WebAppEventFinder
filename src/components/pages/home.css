@@ -10,11 +10,14 @@
 .home_container h1{
     font-size: 2.5em;
     margin-bottom: 0.5em;
+    
 }
 
 .home_container h1 span{
-    color: #978712;
+    color: #FDE74C;
     padding: 0 0.2em;
+    font-size: 1.3em;
+    -webkit-text-stroke: 2px black; /* width and color */
 }
 
 .home_container p{

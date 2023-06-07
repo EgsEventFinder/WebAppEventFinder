@@ -3,6 +3,12 @@
     background-color: #f2f2f2;
     padding: 20px;
   }
+
+  .home_container_tickets h1{
+    font-weight: bold;
+    color: #FDE74C;
+    -webkit-text-stroke: 0.5px black; /* width and color */
+}
   
   .container_body_tickets {
     display: flex;

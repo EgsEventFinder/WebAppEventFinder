@@ -1,6 +1,7 @@
 import './home.css'
 import tickets from '../../img/ticket2.png'
 import LinkButton from '../layouts/linkButton'
+import AnimatedText from '../layouts/AnimatedText'
 
 function Home(props) {
 
@@ -24,7 +25,8 @@ function Home(props) {
     }
     return ( 
         <section className='home_container'>
-            <h1>Welcome to <span>Event Finder</span></h1>
+            <AnimatedText text="Welcome to Event Finder"/>
+            {/* <h1>Welcome to <span>Event Finder</span></h1> */}
             <p>Find the events you want, right now!</p>
             <LinkButton to="/events" text="Find Event" />
             <img src={tickets} alt="tickets"/>

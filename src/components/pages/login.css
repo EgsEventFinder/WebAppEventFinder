@@ -15,7 +15,7 @@
   
   .wrap-login {
     width: 390px;
-    background-color: #333;
+    background-color: #404E4D;
     border-radius: 10px;
     overflow: hidden;
     padding: 77px 55px 33px 55px;
@@ -34,7 +34,10 @@
     color: azure;
     line-height: 1.2;
     text-align: center;
+    
   }
+ 
+  
   
   .login-form-title img {
     width: 90px;
@@ -175,7 +178,7 @@
   
   .txt2 {
     font-size: 14px;
-    color: #6a7dfe;
+    color: #FDE74C;
     line-height: 1.5;
     text-decoration: none;
   }

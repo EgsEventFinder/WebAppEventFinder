@@ -8,6 +8,12 @@
     padding: 0.5em;
 }
 
+.home_container h1{
+    font-weight: bold;
+    color: #FDE74C;
+    -webkit-text-stroke: 2px black; /* width and color */
+}
+
 .container_body {
     width: 100%;
     font-size: 16px;
