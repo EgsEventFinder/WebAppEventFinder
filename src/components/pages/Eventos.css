@@ -1,4 +1,4 @@
-.home_container{
+.home_container_eventos{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,10 +7,10 @@
     padding: 0.5em;
 }
 
-.home_container h1{
+.home_container_eventos h1{
     font-weight: bold;
     color: #FDE74C;
-    -webkit-text-stroke: 0.3px black; /* width and color */
+    -webkit-text-stroke: 0.5px black; /* width and color */
 }
 .container_body {
     /*min-height: 100vh;*/

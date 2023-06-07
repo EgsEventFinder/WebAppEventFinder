@@ -37,7 +37,7 @@ function Eventos() {
 
     return (  
         <>  
-            <div className = "home_container">
+            <div className = "home_container_eventos">
                 <h1>Available Events </h1>
             </div>
             <div className = "container_body">
